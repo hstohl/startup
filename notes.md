@@ -1,4 +1,5 @@
 # CS 260 Notes
+I did this in VS Code.
 
 [My startup](https://simon.cs260.click)
 
