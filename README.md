@@ -73,7 +73,9 @@ I am going to use the required technologies in the following ways.
 - **React** - Provides login, changes fill number when joined, changes join button to full, allows user to join and leave group.
 - **Service** - Endpoints for:
     - login
+    - register
     - joining activity group
+    - leaving activity group
     - Third party call to verify valid email address
 - **DB/Login** - Stores users and groups in database. Database securely stores user login information. 
 - **WebSocket** - As users join groups, their choice is shown to other users.
