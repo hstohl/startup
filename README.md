@@ -70,7 +70,7 @@ I am going to use the required technologies in the following ways.
 
 - **HTML** - Three different screens. Login/Register, joining an activty, and the group information after you've joined.
 - **CSS** - Good looking display, with colored buttons and good whitespace usage.
-- **React** - Provides login, changes fill number when joined, changes join button to full, allows user to leave group.
+- **React** - Provides login, changes fill number when joined, changes join button to full, allows user to join and leave group.
 - **Service** - Endpoints for:
     - login
     - joining activity group
