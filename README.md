@@ -45,8 +45,15 @@ sequenceDiagram
     Hudson->>Website: Join "Board Games"
     Website->>Hudson: "Board Games" group info
     Website->>Kramer: Hudson joined "Board Games"
-    Website->>Brandon: Hudson joined "Board Games"
     Website->>Emma: Hudson joined "Board Games"
+    Website->>Brandon: Hudson joined "Board Games"
+    Brandon->>Website: Join "Board Games"
+    Website->>Brandon: "Board Games" group info
+    Website->>Hudson: Brandon joined "Board Games"
+    Website->>Hudson: Updated "Board Games" group info
+    Website->>Kramer: Brandon joined "Board Games"
+    Website->>Emma: Brandon joined "Board Games"
+
 ```
 
 ### Key features
