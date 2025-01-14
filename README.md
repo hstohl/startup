@@ -55,7 +55,7 @@ I am going to use the required technologies in the following ways.
 - **HTML** - Description here
 - **CSS** - Description here
 - **React** - Description here
-- **Service** - Description here
+- **Service** - Description here. [Eventbrite.](https://www.eventbrite.com/platform/api/)
 - **DB/Login** - Description here
 - **WebSocket** - Description here
 
