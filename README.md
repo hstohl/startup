@@ -58,9 +58,11 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Login, logout, and register
+- Join an activity
+- Leave an activity
+- Displaying how many users are in each activity
+- Displaying the other users' contact information in the same activity
 
 ### Technologies
 
