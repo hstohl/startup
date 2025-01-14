@@ -1,8 +1,7 @@
-# Your startup name here
+# Eventure
 
 
-A brief description of the application here. 
-This will be an app to meet new people. It could be used as a dating app or just to meet new people. Rather than mathching people together, however, you will match with activities. The app will list activities and the users will be able to join activities that interest them, thus matching with people with the same interests.
+Eventure is an app to meet new people. It could be used as a dating app or just to make new friends. Rather than matching people together, however, you will choose activities. The app will list activities and the users will be able to join activities that interest them, thus matching with people with the same interests.
 
 
 ## 🚀 Specification Deliverable
@@ -18,7 +17,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Ever want to do something but have no one to do it with? Eventure (event + adventure) is an app to put you in touch with people who like doing the same things as you. Simply pick an activity you want to do and the app will match you with someone else who picked that activity!
 
 ### Design
 
