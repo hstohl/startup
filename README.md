@@ -23,15 +23,15 @@ Ever want to do something but have no one to do it with? Eventure (event + adven
 
 The user will sign in with their full name, their email, and a password.
 
-![Design image](StartupLogin.png)
+![Login design image](StartupLogin.png)
 
 The user will see a screen with all the activities and will be able to join one.
 
-![Design image](StartupMain.png)
+![Main screen design image](StartupMain.png)
 
 After joining a group, the user will see the names and emails of the other people in their group to get in contact with.
 
-![Design image](StartupJoined.png)
+![Joined group design image](StartupJoined.png)
 
 Here is a sequence diagram showing how the interaction works.
 
@@ -68,12 +68,15 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Three different screens. Login/Register, joining an activty, and the group information after you've joined.
+- **CSS** - Good looking display, with colored buttons and good whitespace usage.
+- **React** - Provides login, changes fill number when joined, changes join button to full, allows user to leave group.
+- **Service** - Endpoints for:
+    - login
+    - joining activity group
+    - Third party call to verify valid email address
+- **DB/Login** - Stores users and groups in database. Database securely stores user login information. 
+- **WebSocket** - As users join groups, their choice is shown to other users.
 
 ## 🚀 AWS deliverable
 
