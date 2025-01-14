@@ -10,10 +10,10 @@ Eventure is an app to meet new people. It could be used as a dating app or just 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
+- [x] A concise and compelling elevator pitch
 - [ ] Description of key features
 - [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -37,9 +37,16 @@ Here is a sequence diagram showing how the interaction works.
 
 ```mermaid
 sequenceDiagram
-    actor You
+    actor Hudson
+    actor Kramer
+    actor Emma
+    actor Brandon
     actor Website
-    You->>Website: Replace this with your design
+    Hudson->>Website: Join "Board Games"
+    Website->>Hudson: "Board Games" group info
+    Website->>Kramer: Hudson joined "Board Games"
+    Website->>Brandon: Hudson joined "Board Games"
+    Website->>Emma: Hudson joined "Board Games"
 ```
 
 ### Key features
