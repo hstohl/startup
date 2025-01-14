@@ -2,7 +2,8 @@
 
 [My Notes](notes.md)
 
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+A brief description of the application here. 
+This will be an app to meet new people. It could be used as a dating app or just to meet new people. Rather than mathching people together, however, you will match with activities. The app will list activities and the users will be able to join activities that interest them, thus matching with people with the same interests.
 
 
 > [!NOTE]
