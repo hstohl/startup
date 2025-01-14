@@ -21,9 +21,19 @@ Ever want to do something but have no one to do it with? Eventure (event + adven
 
 ### Design
 
+The user will sign in with their full name, their email, and a password.
+
 ![Design image](placeholder.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The user will see a screen with all the activities and will be able to join one.
+
+![Design image](placeholder.png)
+
+After joining a group, the user will see the names and emails of the other people in their group to get in contact with.
+
+![Design image](placeholder.png)
+
+Here is a sequence diagram showing how the interaction works.
 
 ```mermaid
 sequenceDiagram
