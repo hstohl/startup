@@ -23,15 +23,15 @@ Ever want to do something but have no one to do it with? Eventure (event + adven
 
 The user will sign in with their full name, their email, and a password.
 
-![Design image](placeholder.png)
+![Design image](StartupLogin.png)
 
 The user will see a screen with all the activities and will be able to join one.
 
-![Design image](placeholder.png)
+![Design image](StartupMain.png)
 
 After joining a group, the user will see the names and emails of the other people in their group to get in contact with.
 
-![Design image](placeholder.png)
+![Design image](StartupJoined.png)
 
 Here is a sequence diagram showing how the interaction works.
 
