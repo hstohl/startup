@@ -10,11 +10,13 @@
 
 ## AWS Notes
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+https://us-east-1.console.aws.amazon.com/console/home
 
 ## HTML Notes
 
 The Web Father, Tim Berners-Lee created the World Wide Web and HTML. 
+
+HTML is the barebones structure of a website. It's what creates the actual objects that are on the site: the text, the buttons, the images, etc. CSS is there to make this stuff look pretty.
 
 ## CSS Notes
 Håkon Wium Lie created Cascading Style Sheets, or CSS. This makes webpages pretty, rather than just like documents.
