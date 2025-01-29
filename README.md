@@ -90,15 +90,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - There are three HTML pages. The first is for logging in. The second for choosing and joining a group. And the third is for viewing your group or leaving the group.
+- [x] **Proper HTML element usage** - I used HTML tags like body, main, header, and footer where appropriate.
+- [x] **Links** - The login page automatically links to the choose.html page when signing in. Joining an activity on the choose page links to the joined.html page.
+- [x] **Text** - There is text for each activity describing what it is. When an activity is joined, there is text showing who is in your group.
+- [x] **3rd party API placeholder** - My 3rd party API will be an email verifier. The placeholder for it is the input box where the user inputs their email.
+- [x] **Images** - There is an image of a fun group activity on the joined.html page.
+- [x] **Login placeholder** - User can input their name, email, and password. Their name has a place to be displayed on choose.html, and their name is designated with "(you)" on the joined.html page.
+- [x] **DB data placeholder** - The program will save the username and password as evidenced by the login vs register buttons. As described earlier, the program will be able to retrieve the users name to display back to them.
+- [x] **WebSocket placeholder** - When a person joins a group, the numbers will automatically update on choose.html. When the user is already in a group, they will get updates when another user joins or leaves the group, and the members listed will update accordingly.
 
 ## 🚀 CSS deliverable
 
