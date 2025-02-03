@@ -1,0 +1,123 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove any padding */
+    /* overflow-x: hidden; */
+  }
+ 
+ body {
+    display: flex;
+    flex-direction: column;
+    min-width: 375px;
+  }
+
+/* header {
+    flex: 0 80px;
+  } */
+
+   main {
+    display: flex;
+    flex: 1 calc(100vh - 110px);
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    width: 100%;
+  } 
+
+  
+
+  .header-container,
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  form {
+    width: 80%;
+    max-width: 400px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  label {
+    width: 80px;
+    text-align: left;
+  }
+  
+  input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    width: 100%;
+  }
+  
+  button {
+    flex: 1;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    padding: 12px;
+    border-radius: 6px;
+  }
+  
+
+  menu {
+    flex: 1;
+    display: flex;
+    /*  overwrite Bootstrap so the menu does not wrap */
+    flex-direction: row !important;
+    list-style: none;
+  }
+  
+  .navbar-brand {
+    padding-left: 0.3em;
+    border-bottom: solid rgb(182, 182, 182) thin;
+  }
+  
+  menu .nav-item {
+    padding: 0 0.3em;
+  }
+
+  @media (max-height: 600px) {
+    header {
+      display: none;
+    }
+    footer {
+      display: none;
+    }
+    main {
+      flex: 1 100vh;
+    }
+  }
+
+  @media (orientation: portrait) {
+    main {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+  }
