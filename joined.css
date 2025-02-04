@@ -62,25 +62,6 @@ menu .nav-item {
   margin: 0 auto;
 }
 
-@media (max-height: 600px) {
-  header {
-    display: none;
-  }
-  footer {
-    display: none;
-  }
-  main {
-    flex: 1 100vh;
-  }
-}
-
-@media (orientation: portrait) {
-  .chatbox {
-    width: 80%;
-    height: 500px;
-  }
-}
-
 @keyframes bounceIn {
   0% {
     transform: scale(0.5);
@@ -99,7 +80,32 @@ menu .nav-item {
 }
 
 .image {
-  width: 50%;
+  padding-bottom: 30px;
+  width: 60%;
   height: auto;
+  margin: 0 auto;
   animation: bounceIn 1s ease-out;
+}
+
+@media (max-height: 600px) {
+  header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 100vh;
+  }
+}
+
+@media (orientation: portrait) {
+  .chatbox {
+    width: 80%;
+    height: 500px;
+  }
+  .image {
+    width: 90%;
+    height: auto;
+  }
 }
