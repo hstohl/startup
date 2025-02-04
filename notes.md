@@ -14,12 +14,14 @@ https://us-east-1.console.aws.amazon.com/console/home
 
 ## HTML Notes
 
-The Web Father, Tim Berners-Lee created the World Wide Web and HTML. 
+The Web Father, Tim Berners-Lee created the World Wide Web and HTML.
 
-HTML is the barebones structure of a website. It's what creates the actual objects that are on the site: the text, the buttons, the images, etc. CSS is there to make this stuff look pretty.
+HTML is the bare-bones structure of a website. It's what creates the actual objects that are on the site: the text, the buttons, the images, etc. CSS is there to make this stuff look pretty.
 
 ## CSS Notes
-Håkon Wium Lie created Cascading Style Sheets, or CSS. This makes webpages pretty, rather than just like documents.
+
+Håkon Wium Lie created Cascading Style Sheets, or CSS. This makes webpages pretty, rather than just like documents. It's high-key pretty difficult to get it to work, but after while it gets there.
 
 ## JavaScript
-Brendan Eich created JavaScript to make webpages interactive. 
+
+Brendan Eich created JavaScript to make webpages interactive.
