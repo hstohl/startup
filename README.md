@@ -105,7 +105,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Navigation elements** - I have a good looking navbar at the top of each page leading to the other pages.
 - [x] **Responsive to window resizing** - My pages change to fit different screens, shrinking or changing orientation depending on what screen it's displayed on.
 - [x] **Application elements** - I used good whitespace and colors.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
+- [x] **Application text content** - Used a consistent 'Quicksand' font. Colored and weighted text to help readability. People joining is in blue and names are bolded.
 - [ ] **Application images** - I did not complete this part of the deliverable.
 
 ## 🚀 React part 1: Routing deliverable
