@@ -1,11 +1,8 @@
 # Eventure
 
-
 Eventure is an app to meet new people. It could be used as a dating app or just to make new friends. Rather than matching people together, however, you will choose activities. The app will list activities and the users will be able to join activities that interest them, thus matching with people with the same interests.
 
-
 ## 🚀 Specification Deliverable
-
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
@@ -72,12 +69,12 @@ I am going to use the required technologies in the following ways.
 - **CSS** - Good looking display, with colored buttons and good whitespace usage.
 - **React** - Provides login, changes fill number when joined, changes join button to full, allows user to join and leave group.
 - **Service** - Endpoints for:
-    - login
-    - register
-    - joining activity group
-    - leaving activity group
-    - Third party call to verify valid email address
-- **DB/Login** - Stores users and groups in database. Database securely stores user login information. 
+  - login
+  - register
+  - joining activity group
+  - leaving activity group
+  - Third party call to verify valid email address
+- **DB/Login** - Stores users and groups in database. Database securely stores user login information.
 - **WebSocket** - As users join groups, their choice is shown to other users.
 
 ## 🚀 AWS deliverable
@@ -98,16 +95,16 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Images** - There is an image of a fun group activity on the joined.html page.
 - [x] **Login placeholder** - User can input their name, email, and password. Their name has a place to be displayed on choose.html, and their name is designated with "(you)" on the joined.html page.
 - [x] **DB data placeholder** - The program will save the username and password as evidenced by the login vs register buttons. As described earlier, the program will be able to retrieve the users name to display back to them.
-- [x] **WebSocket placeholder** - When a person joins a group, the numbers will automatically update on choose.html. When the user is already in a group, they will get updates when another user joins or leaves the group, and the members listed will update accordingly.
+- [x] **WebSocket placeholder** - When a person joins a group, the numbers will automatically update on choose.html. When the user is already in a group, they will get updates when another user joins or leaves the group in the chat. The group will be able to chat with one another.
 
 ## 🚀 CSS deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - My startup has headers, footers, and main body content.
+- [x] **Navigation elements** - I have a good looking navbar at the top of each page leading to the other pages.
+- [x] **Responsive to window resizing** - My pages change to fit different screens, shrinking or changing orientation depending on what screen it's displayed on.
+- [x] **Application elements** - I used good whitespace and colors.
 - [ ] **Application text content** - I did not complete this part of the deliverable.
 - [ ] **Application images** - I did not complete this part of the deliverable.
 
