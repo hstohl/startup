@@ -80,3 +80,26 @@ menu .nav-item {
     height: 500px;
   }
 }
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.image {
+  width: 50%;
+  height: auto;
+  animation: bounceIn 1s ease-out;
+}
