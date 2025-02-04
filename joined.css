@@ -1,9 +1,24 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 header {
   flex: 0 80px;
 }
 
 main {
-  margin: 100px 20px 20px 20px;
+  margin: 72px 20px 20px 20px;
+  width: 100vw;
+  max-width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 370px;
 }
 
 menu {
@@ -24,16 +39,21 @@ menu .nav-item {
 }
 
 .chatbox {
-  width: 400px;
+  width: 50%;
   height: 500px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
+
 .chat-messages {
   height: 400px;
   overflow-y: auto;
 }
 
-.alert {
-  color: red;
+.btn-fixed {
+  width: 150px;
+  height: 40px;
+  margin: 0 auto;
 }
 
 @media (max-height: 600px) {
@@ -45,5 +65,12 @@ menu .nav-item {
   }
   main {
     flex: 1 100vh;
+  }
+}
+
+@media (orientation: portrait) {
+  .chatbox {
+    width: 80%;
+    height: 500px;
   }
 }
