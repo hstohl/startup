@@ -23,6 +23,19 @@ header {
     padding: 0 0.3em;
   }
 
+  .chatbox {
+    width: 400px;
+    height: 500px;
+}
+.chat-messages {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.alert {
+    color: red;
+}
+
   @media (max-height: 600px) {
     header {
       display: none;
