@@ -106,7 +106,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Responsive to window resizing** - My pages change to fit different screens, shrinking or changing orientation depending on what screen it's displayed on.
 - [x] **Application elements** - I used good whitespace and colors.
 - [x] **Application text content** - Used a consistent 'Quicksand' font. Colored and weighted text to help readability. People joining is in blue and names are bolded.
-- [x] **Application images** - Image scales to the size of the screen, and also bounces in.
+- [x] **Application images** - Image scales to the size of the screen, and also bounces in with an animation.
 
 ## 🚀 React part 1: Routing deliverable
 
