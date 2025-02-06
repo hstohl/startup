@@ -1,4 +1,5 @@
 import React from "react";
+import "./joined.css";
 
 export function Joined() {
   return (
