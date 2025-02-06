@@ -30,9 +30,7 @@ export default function App() {
         </nav>
       </header>
 
-      <main className="container-fluid bg-secondary text-center">
-        Main stuff here!
-      </main>
+      <main>Main stuff here!</main>
 
       <footer className="bg-dark text-white-50">
         <hr />
