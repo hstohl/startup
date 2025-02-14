@@ -73,7 +73,7 @@ export function Joined() {
               className="form-control"
               placeholder="Type a message..."
             />
-            <button className="btn btn-primary">Send</button>
+            <button className="btn btn-primary send">Send</button>
           </div>
         </div>
       </div>

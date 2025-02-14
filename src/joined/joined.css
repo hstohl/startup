@@ -56,9 +56,32 @@ menu .nav-item {
   margin-bottom: 20px;
 }
 
+.card-header {
+  flex-grow: 1;
+  width: 100%;
+}
+
 .chat-messages {
   height: 400px;
   overflow-y: auto;
+  flex-grow: 1;
+  width: 100%;
+  text-align: left;
+}
+
+.card-footer {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-group > .form-control {
+  width: 50%;
+}
+
+.send {
+  margin-top: 0;
 }
 
 .btn-fixed {
