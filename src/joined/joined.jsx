@@ -15,7 +15,7 @@ export function Joined() {
             <strong>Hudson Stohl</strong> has joined the group
           </div>
           <div className="mb-2 text-info">
-            <strong>George Johnson</strong> has left the group
+            <strong>Connor Murphy</strong> has left the group
           </div>
           <div className="mb-2 text-info">
             <strong>Emma Clark</strong> has joined the group
