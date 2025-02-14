@@ -9,7 +9,7 @@ body {
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 header {
@@ -33,6 +33,11 @@ menu {
   /*  overwrite Bootstrap so the menu does not wrap */
   flex-direction: row !important;
   list-style: none;
+}
+
+p {
+  font-size: 30px;
+  padding-top: 20px;
 }
 
 .navbar-brand {
@@ -106,6 +111,17 @@ menu .nav-item {
   }
   .image {
     width: 90%;
+    height: auto;
+  }
+}
+
+@media (orientation: landscape) {
+  .chatbox {
+    width: 50%;
+    height: 500px;
+  }
+  .image {
+    width: 60%;
     height: auto;
   }
 }

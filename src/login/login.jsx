@@ -1,9 +1,9 @@
 import React from "react";
-// import "./login.css";
+import "./login.css";
 
 export function Login() {
   return (
-    <main className="container-fluid bg-secondary text-center">
+    <main className="login-main container-fluid bg-secondary text-center">
       <div className="header-container">
         <h1>Welcome to Eventure</h1>
         <p>Sign in or register to get started!</p>

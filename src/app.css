@@ -111,7 +111,7 @@ menu .nav-item {
   padding: 0 0.3em;
 }
 
-@media (max-height: 600px) {
+/* @media (max-height: 600px) {
   header {
     display: none;
   }
@@ -137,4 +137,4 @@ menu .nav-item {
     align-items: center;
     justify-content: space-around;
   }
-}
+} */
