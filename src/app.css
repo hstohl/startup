@@ -110,31 +110,3 @@ menu {
 menu .nav-item {
   padding: 0 0.3em;
 }
-
-/* @media (max-height: 600px) {
-  header {
-    display: none;
-  }
-  footer {
-    display: none;
-  }
-  main {
-    flex: 1 100vh;
-  }
-}
-
-@media (orientation: portrait) {
-  main {
-    flex-direction: column !important;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (orientation: landscape) {
-  main {
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: space-around;
-  }
-} */
