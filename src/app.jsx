@@ -32,16 +32,20 @@ export default function App() {
                   Login
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="choose">
-                  Join
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="joined">
-                  Group
-                </NavLink>
-              </li>
+              {authState === AuthState.Authenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="choose">
+                    Join
+                  </NavLink>
+                </li>
+              )}
+              {authState === AuthState.Authenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="joined">
+                    Group
+                  </NavLink>
+                </li>
+              )}
             </menu>
           </nav>
         </header>
