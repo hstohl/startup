@@ -6,8 +6,17 @@ import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Login } from "./login/login";
 import { Choose } from "./choose/choose";
 import { Joined } from "./joined/joined";
+import { AuthState } from "./login/authState";
 
 export default function App() {
+  const [userName, setUserName] = React.useState(
+    localStorage.getItem("userName") || ""
+  );
+  const currentAuthState = userName
+    ? AuthState.Authenticated
+    : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+
   return (
     <BrowserRouter>
       <div className="app bg-dark text-light">
@@ -35,7 +44,20 @@ export default function App() {
         </header>
 
         <Routes>
-          <Route path="/" element={<Login />} exact />
+          <Route
+            path="/"
+            element={
+              <Login
+                userName={userName}
+                authState={authState}
+                onAuthChange={(userName, authState) => {
+                  setAuthState(authState);
+                  setUserName(userName);
+                }}
+              />
+            }
+            exact
+          />
           <Route path="/choose" element={<Choose />} />
           <Route path="/joined" element={<Joined />} />
           <Route path="*" element={<NotFound />} />

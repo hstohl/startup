@@ -2,6 +2,7 @@ import React from "react";
 
 import Button from "react-bootstrap/Button";
 import { MessageDialog } from "./messageDialog";
+import "./login.css";
 
 export function Unauthenticated(props) {
   const [userName, setUserName] = React.useState(props.userName);
@@ -25,33 +26,35 @@ export function Unauthenticated(props) {
           <h1>Welcome to Eventure</h1>
           <p>Sign in or register to get started!</p>
         </div>
-        <div className="form-group">
-          <label htmlFor="fullname">Full Name:</label>
-          <input type="text" id="fullname" placeholder="your name" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input type="text" id="email" placeholder="your@email.com" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" placeholder="password" />
-        </div>
-        <div className="form-group">
-          <Button
-            className="btn btn-primary"
-            onClick={() => loginUser()}
-            disabled={!userName || !password}
-          >
-            Login
-          </Button>
-          <Button
-            className="btn btn-outline-light"
-            onClick={() => createUser()}
-            disabled={!userName || !password}
-          >
-            Register
-          </Button>
+        <div className="forms-container">
+          <div className="form-group">
+            <label htmlFor="fullname">Full Name:</label>
+            <input type="text" id="fullname" placeholder="your name" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input type="text" id="email" placeholder="your@email.com" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" placeholder="password" />
+          </div>
+          <div className="form-group">
+            <Button
+              className="btn btn-primary"
+              onClick={() => loginUser()}
+              disabled={!userName || !password}
+            >
+              Login
+            </Button>
+            <Button
+              className="btn btn-outline-light"
+              onClick={() => createUser()}
+              disabled={!userName || !password}
+            >
+              Register
+            </Button>
+          </div>
         </div>
       </main>
 

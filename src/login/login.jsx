@@ -5,35 +5,25 @@ import { Unauthenticated } from "./unauthenticated";
 import { Authenticated } from "./authenticated";
 import { AuthState } from "./authState";
 
-export function Login() {
+export function Login({ userName, authState, onAuthChange }) {
   return (
     <main className="login-main container-fluid bg-secondary text-center">
-      <div className="header-container">
-        <h1>Welcome to Eventure</h1>
-        <p>Sign in or register to get started!</p>
+      <div className="wrapper">
+        {authState === AuthState.Authenticated && (
+          <Authenticated
+            userName={userName}
+            onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)}
+          />
+        )}
+        {authState === AuthState.Unauthenticated && (
+          <Unauthenticated
+            userName={userName}
+            onLogin={(loginUserName) => {
+              onAuthChange(loginUserName, AuthState.Authenticated);
+            }}
+          />
+        )}
       </div>
-      <form method="get" action="choose">
-        <div className="form-group">
-          <label htmlFor="fullname">Full Name:</label>
-          <input type="text" id="fullname" placeholder="your name" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input type="text" id="email" placeholder="your@email.com" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" placeholder="password" />
-        </div>
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary">
-            Login
-          </button>
-          <button type="submit" className="btn btn-outline-light">
-            Register
-          </button>
-        </div>
-      </form>
     </main>
   );
 }
