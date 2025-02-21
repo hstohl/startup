@@ -12,6 +12,9 @@ export default function App() {
   const [userName, setUserName] = React.useState(
     localStorage.getItem("userName") || ""
   );
+  const [fullName, setFullName] = React.useState(
+    localStorage.getItem("fullName") || ""
+  );
   const currentAuthState = userName
     ? AuthState.Authenticated
     : AuthState.Unauthenticated;
@@ -48,10 +51,12 @@ export default function App() {
             path="/"
             element={
               <Login
+                fullName={fullName}
                 userName={userName}
                 authState={authState}
-                onAuthChange={(userName, authState) => {
+                onAuthChange={(fullName, userName, authState) => {
                   setAuthState(authState);
+                  setFullName(fullName);
                   setUserName(userName);
                 }}
               />

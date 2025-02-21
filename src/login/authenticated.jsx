@@ -9,6 +9,7 @@ export function Authenticated(props) {
   const navigate = useNavigate();
 
   function logout() {
+    localStorage.removeItem("fullName");
     localStorage.removeItem("userName");
     props.onLogout();
   }
@@ -16,7 +17,7 @@ export function Authenticated(props) {
   return (
     <div>
       <h1>Welcome to Eventure</h1>
-      <div className="myName">{props.userName}</div>
+      <div className="myName">{props.fullName}</div>
       <Button variant="primary" onClick={() => navigate("/choose")}>
         Join a Group
       </Button>

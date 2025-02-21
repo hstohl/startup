@@ -5,18 +5,21 @@ import { MessageDialog } from "./messageDialog";
 import "./login.css";
 
 export function Unauthenticated(props) {
+  const [fullName, setFullName] = React.useState(props.fullName);
   const [userName, setUserName] = React.useState(props.userName);
   const [password, setPassword] = React.useState("");
   const [displayError, setDisplayError] = React.useState(null);
 
   async function loginUser() {
+    localStorage.setItem("fullName", fullName);
     localStorage.setItem("userName", userName);
-    props.onLogin(userName);
+    props.onLogin(fullName, userName);
   }
 
   async function createUser() {
+    localStorage.setItem("fullName", fullName);
     localStorage.setItem("userName", userName);
-    props.onLogin(userName);
+    props.onLogin(fullName, userName);
   }
 
   return (
@@ -29,7 +32,13 @@ export function Unauthenticated(props) {
         <div className="forms-container">
           <div className="form-group">
             <label htmlFor="fullname">Full Name:</label>
-            <input type="text" id="fullname" placeholder="your name" />
+            <input
+              type="text"
+              id="fullname"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="your name"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
@@ -54,14 +63,14 @@ export function Unauthenticated(props) {
             <Button
               variant="btn btn-primary"
               onClick={() => loginUser()}
-              disabled={!userName || !password}
+              disabled={!fullName || !userName || !password}
             >
               Login
             </Button>
             <Button
               variant="btn btn-outline-light"
               onClick={() => createUser()}
-              disabled={!userName || !password}
+              disabled={!fullName || !userName || !password}
             >
               Register
             </Button>
