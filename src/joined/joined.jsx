@@ -7,6 +7,7 @@ import "./joined.css";
 
 export function Joined(props) {
   const [message, setMessage] = React.useState("");
+  const inputRef = React.useRef(null);
 
   function handleChatMessage(message) {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Chat, {
@@ -14,12 +15,15 @@ export function Joined(props) {
       message: message,
     });
     setMessage("");
+    inputRef.current?.focus();
   }
+
   useEffect(() => {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Join, {
       name: props.userName,
     });
   }, []);
+
   return (
     <main className="container-fluid bg-secondary">
       <p>Your Activity: Board Games</p>
@@ -34,6 +38,7 @@ export function Joined(props) {
         <div className="card-footer">
           <div className="input-group">
             <input
+              ref={inputRef}
               type="text"
               className="form-control"
               value={message}

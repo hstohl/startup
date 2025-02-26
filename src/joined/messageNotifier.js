@@ -22,12 +22,7 @@ class MessageEventNotifier {
   constructor() {
     // Simulate chat messages that will eventually come over WebSocket
     setInterval(() => {
-      var nameOptions = [
-        "Brandon Clark",
-        "Emma Clark",
-        "Hudson Stohl",
-        "Kramer Horning",
-      ];
+      var nameOptions = ["Brandon Clark", "Emma Clark", "Kramer Horning"];
       var messageOptions = [
         "Hello!",
         "What's up",
@@ -50,24 +45,19 @@ class MessageEventNotifier {
         message: message,
       });
     }, 7000);
-    // setInterval(() => {
-    //   var nameOptions = [
-    //     "Brandon Clark",
-    //     "Emma Clark",
-    //     "Hudson Stohl",
-    //     "Kramer Horning",
-    //   ];
-    //   const userName =
-    //     nameOptions[Math.floor(Math.random() * nameOptions.length)];
-    //   var messageTypeOptions = [MessageEvent.Join, MessageEvent.Leave];
-    //   const messageType =
-    //     messageTypeOptions[
-    //       Math.floor(Math.random() * messageTypeOptions.length)
-    //     ];
-    //   this.broadcastEvent(userName, messageType, {
-    //     name: userName,
-    //   });
-    // }, 19769);
+    setInterval(() => {
+      var nameOptions = ["Brandon Clark", "Emma Clark", "Kramer Horning"];
+      const userName =
+        nameOptions[Math.floor(Math.random() * nameOptions.length)];
+      var messageTypeOptions = [MessageEvent.Join, MessageEvent.Leave];
+      const messageType =
+        messageTypeOptions[
+          Math.floor(Math.random() * messageTypeOptions.length)
+        ];
+      this.broadcastEvent(userName, messageType, {
+        name: userName,
+      });
+    }, 19769);
   }
 
   broadcastEvent(from, type, value) {

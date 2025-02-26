@@ -6,8 +6,8 @@ import "./messages.css";
 
 export function Messages(props) {
   const userName = props.userName;
-
   const [events, setEvent] = React.useState([]);
+  const messagesContainerRef = React.useRef(null);
 
   React.useEffect(() => {
     MessageNotifier.addHandler(handleChatEvent);
@@ -16,6 +16,13 @@ export function Messages(props) {
       MessageNotifier.removeHandler(handleChatEvent);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  }, [events]);
 
   function handleChatEvent(event) {
     setEvent((prevEvents) => [...prevEvents, event]);
@@ -46,8 +53,12 @@ export function Messages(props) {
   }
 
   return (
-    <div className="players">
-      <div id="player-messages">{createMessageArray()}</div>
+    <div
+      ref={messagesContainerRef}
+      className="chat-container"
+      style={{ maxHeight: "330px", overflowY: "auto" }}
+    >
+      {createMessageArray()}
     </div>
   );
 }
