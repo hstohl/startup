@@ -6,6 +6,15 @@ import { MessageEvent, MessageNotifier } from "./messageNotifier";
 import "./joined.css";
 
 export function Joined(props) {
+  const [message, setMessage] = React.useState("");
+
+  function handleChatMessage(message) {
+    MessageNotifier.broadcastEvent(props.userName, MessageEvent.Chat, {
+      name: props.userName,
+      message: message,
+    });
+    setMessage("");
+  }
   useEffect(() => {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Join, {
       name: props.userName,
@@ -27,9 +36,17 @@ export function Joined(props) {
             <input
               type="text"
               className="form-control"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               placeholder="Type a message..."
             />
-            <button className="btn btn-primary send">Send</button>
+            <button
+              onClick={() => handleChatMessage(message)}
+              className="btn btn-primary send"
+              disabled={!message}
+            >
+              Send
+            </button>
           </div>
         </div>
       </div>
