@@ -2,7 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./choose.css";
 
-export function Choose() {
+export function Choose(props) {
+  const navigate = useNavigate();
+
   return (
     <main className="container-fluid bg-secondary text-center">
       <h1>Join an Activity!</h1>
@@ -25,9 +27,17 @@ export function Choose() {
           <div className="activity">
             <div>🍨</div>
             <div>Ice Cream</div>
-            <div>👤 2/2</div>
-            <button type="button" className="btn btn-primary" disabled>
-              Full
+            <div>👤 1/2</div>
+            <button
+              onClick={() => {
+                props.onGroupChoice("Ice Cream");
+                navigate("/joined");
+              }}
+              type="button"
+              className="btn btn-primary"
+              //disabled
+            >
+              Join
             </button>
           </div>
         </div>

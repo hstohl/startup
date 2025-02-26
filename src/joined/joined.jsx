@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Messages } from "./messages";
 import { MessageEvent, MessageNotifier } from "./messageNotifier";
@@ -8,6 +9,7 @@ import "./joined.css";
 export function Joined(props) {
   const [message, setMessage] = React.useState("");
   const inputRef = React.useRef(null);
+  const navigate = useNavigate();
 
   function handleChatMessage(message) {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Chat, {
@@ -26,7 +28,7 @@ export function Joined(props) {
 
   return (
     <main className="container-fluid bg-secondary">
-      <p>Your Activity: Board Games</p>
+      <p>Your Activity: {props.group}</p>
 
       <div className="card chatbox">
         <div className="card-header text-center bg-primary text-white">
@@ -58,7 +60,7 @@ export function Joined(props) {
 
       <button
         type="button"
-        onClick={() => (window.location.href = "choose.html")}
+        onClick={() => navigate("/choose")}
         className="btn btn-danger btn-fixed"
       >
         Leave Group
