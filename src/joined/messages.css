@@ -1,0 +1,12 @@
+.name {
+  font-weight: bold;
+}
+
+.chat {
+  color: black;
+}
+
+.chatJoin,
+.chatLeave {
+  color: turquoise;
+}

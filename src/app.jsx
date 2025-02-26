@@ -68,7 +68,7 @@ export default function App() {
             exact
           />
           <Route path="/choose" element={<Choose />} />
-          <Route path="/joined" element={<Joined />} />
+          <Route path="/joined" element={<Joined userName={fullName} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

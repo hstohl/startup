@@ -1,7 +1,10 @@
 import React from "react";
+
+import { Messages } from "./messages";
+
 import "./joined.css";
 
-export function Joined() {
+export function Joined(props) {
   return (
     <main className="container-fluid bg-secondary">
       <p>Your Activity: Board Games</p>
@@ -11,7 +14,8 @@ export function Joined() {
           Chat with your Group
         </div>
         <div className="card-body chat-messages p-3 text-black">
-          <div className="mb-2 text-info">
+          <Messages userName={props.userName} />
+          {/* <div className="mb-2 text-info">
             <strong>Hudson Stohl</strong> has joined the group
           </div>
           <div className="mb-2 text-info">
@@ -64,7 +68,7 @@ export function Joined() {
           </div>
           <div className="mb-2">
             <strong>Brandon:</strong> Lit see yall then
-          </div>
+          </div> */}
         </div>
         <div className="card-footer">
           <div className="input-group">
