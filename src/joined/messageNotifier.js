@@ -49,7 +49,25 @@ class MessageEventNotifier {
         name: userName,
         message: message,
       });
-    }, 10000);
+    }, 7000);
+    // setInterval(() => {
+    //   var nameOptions = [
+    //     "Brandon Clark",
+    //     "Emma Clark",
+    //     "Hudson Stohl",
+    //     "Kramer Horning",
+    //   ];
+    //   const userName =
+    //     nameOptions[Math.floor(Math.random() * nameOptions.length)];
+    //   var messageTypeOptions = [MessageEvent.Join, MessageEvent.Leave];
+    //   const messageType =
+    //     messageTypeOptions[
+    //       Math.floor(Math.random() * messageTypeOptions.length)
+    //     ];
+    //   this.broadcastEvent(userName, messageType, {
+    //     name: userName,
+    //   });
+    // }, 19769);
   }
 
   broadcastEvent(from, type, value) {
