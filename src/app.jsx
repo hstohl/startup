@@ -29,11 +29,13 @@ export default function App() {
           <nav className="navbar fixed-top navbar-dark bg-dark">
             <div className="navbar-brand">Eventure</div>
             <menu className="navbar-nav">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="">
-                  Login
-                </NavLink>
-              </li>
+              {!group && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="">
+                    Login
+                  </NavLink>
+                </li>
+              )}
               {authState === AuthState.Authenticated && !group && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="choose">

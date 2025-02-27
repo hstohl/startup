@@ -8,12 +8,22 @@ import "./joined.css";
 
 export function Joined(props) {
   const [message, setMessage] = React.useState("");
+  const [capacity, setCapacity] = React.useState([0, 0]);
   const inputRef = React.useRef(null);
   const navigate = useNavigate();
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  React.useEffect(() => {
+    const activity = JSON.parse(localStorage.getItem("activities")).find(
+      (activity) => activity.name === props.group
+    );
+    if (activity) {
+      setCapacity(activity.capacity);
+    }
+  }, [props.group]);
 
   function handleChatMessage(message) {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Chat, {
@@ -30,9 +40,31 @@ export function Joined(props) {
     });
   }, []);
 
+  const handleLeaveGroup = () => {
+    const activities = JSON.parse(localStorage.getItem("activities")) || [];
+
+    const updatedActivities = activities.map((activity) => {
+      if (activity.name === props.group) {
+        return {
+          ...activity,
+          capacity: [activity.capacity[0] - 1, activity.capacity[1]],
+        };
+      }
+      return activity;
+    });
+
+    localStorage.setItem("activities", JSON.stringify(updatedActivities));
+
+    props.setGroup("");
+    localStorage.removeItem("group");
+    navigate("/choose");
+  };
+
   return (
     <main className="container-fluid bg-secondary">
-      <p>Your Activity: {props.group}</p>
+      <p>
+        Your Activity: {props.group} 👤 {capacity[0]}/{capacity[1]}
+      </p>
 
       <div className="card chatbox">
         <div className="card-header text-center bg-primary text-white">
@@ -64,26 +96,7 @@ export function Joined(props) {
 
       <button
         type="button"
-        onClick={() => {
-          const activities =
-            JSON.parse(localStorage.getItem("activities")) || [];
-
-          const updatedActivities = activities.map((activity) => {
-            if (activity.name === props.group) {
-              return {
-                ...activity,
-                capacity: [activity.capacity[0] - 1, activity.capacity[1]],
-              };
-            }
-            return activity;
-          });
-
-          localStorage.setItem("activities", JSON.stringify(updatedActivities));
-
-          props.setGroup("");
-          localStorage.removeItem("group");
-          navigate("/choose");
-        }}
+        onClick={handleLeaveGroup}
         className="btn btn-danger btn-fixed"
       >
         Leave Group
