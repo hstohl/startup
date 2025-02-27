@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import "./choose.css";
+
 const initialActivities = [
   { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
   { emoji: "🎷", name: "Concert", capacity: [0, 2] },
@@ -13,7 +15,7 @@ const initialActivities = [
 ];
 
 const ActivityCard = ({ emoji, name, capacity, full, onJoin }) => {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
   return (
     <div className="card">
@@ -40,11 +42,18 @@ const ActivityCard = ({ emoji, name, capacity, full, onJoin }) => {
 };
 
 export function ActivityList({ onGroupChoice }) {
-  const [activities, setActivities] = React.useState(initialActivities);
+  const [activities, setActivities] = React.useState(() => {
+    const storedActivities = localStorage.getItem("activities");
+    return storedActivities ? JSON.parse(storedActivities) : initialActivities;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem("activities", JSON.stringify(activities));
+  }, [activities]);
 
   const handleJoinActivity = (activityName) => {
-    setActivities((prevActivities) =>
-      prevActivities.map((activity) => {
+    setActivities((prevActivities) => {
+      const updatedActivities = prevActivities.map((activity) => {
         if (
           activity.name === activityName &&
           activity.capacity[0] < activity.capacity[1]
@@ -55,8 +64,10 @@ export function ActivityList({ onGroupChoice }) {
           };
         }
         return activity;
-      })
-    );
+      });
+      localStorage.setItem("activities", JSON.stringify(updatedActivities));
+      return updatedActivities;
+    });
     onGroupChoice(activityName);
   };
   return (
