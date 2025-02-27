@@ -11,6 +11,10 @@ export function Joined(props) {
   const inputRef = React.useRef(null);
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   function handleChatMessage(message) {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Chat, {
       name: props.userName,
