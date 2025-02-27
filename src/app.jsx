@@ -15,7 +15,8 @@ export default function App() {
   const [fullName, setFullName] = React.useState(
     localStorage.getItem("fullName") || ""
   );
-  const [group, setGroup] = React.useState("");
+  const [group, setGroup] = React.useState(localStorage.getItem("group") || "");
+
   const currentAuthState = userName
     ? AuthState.Authenticated
     : AuthState.Unauthenticated;
@@ -33,14 +34,14 @@ export default function App() {
                   Login
                 </NavLink>
               </li>
-              {authState === AuthState.Authenticated && (
+              {authState === AuthState.Authenticated && !group && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="choose">
                     Join
                   </NavLink>
                 </li>
               )}
-              {authState === AuthState.Authenticated && (
+              {authState === AuthState.Authenticated && group && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="joined">
                     Group
@@ -74,13 +75,16 @@ export default function App() {
               <Choose
                 onGroupChoice={(groupName) => {
                   setGroup(groupName);
+                  localStorage.setItem("group", groupName);
                 }}
               />
             }
           />
           <Route
             path="/joined"
-            element={<Joined userName={fullName} group={group} />}
+            element={
+              <Joined userName={fullName} group={group} setGroup={setGroup} />
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

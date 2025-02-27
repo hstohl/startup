@@ -82,5 +82,3 @@ export function ActivityList({ onGroupChoice }) {
     </div>
   );
 }
-
-//export default ActivityList;

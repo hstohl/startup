@@ -64,7 +64,26 @@ export function Joined(props) {
 
       <button
         type="button"
-        onClick={() => navigate("/choose")}
+        onClick={() => {
+          const activities =
+            JSON.parse(localStorage.getItem("activities")) || [];
+
+          const updatedActivities = activities.map((activity) => {
+            if (activity.name === props.group) {
+              return {
+                ...activity,
+                capacity: [activity.capacity[0] - 1, activity.capacity[1]],
+              };
+            }
+            return activity;
+          });
+
+          localStorage.setItem("activities", JSON.stringify(updatedActivities));
+
+          props.setGroup("");
+          localStorage.removeItem("group");
+          navigate("/choose");
+        }}
         className="btn btn-danger btn-fixed"
       >
         Leave Group
