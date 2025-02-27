@@ -56,6 +56,12 @@ export function Joined(props) {
     });
   }, []);
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && message.trim()) {
+      handleChatMessage(message);
+    }
+  };
+
   const handleLeaveGroup = () => {
     if (leaveClickedRef.current) return;
     leaveClickedRef.current = true;
@@ -119,6 +125,7 @@ export function Joined(props) {
               className="form-control"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="Type a message..."
             />
             <button
