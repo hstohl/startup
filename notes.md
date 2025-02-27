@@ -25,3 +25,7 @@ Håkon Wium Lie created Cascading Style Sheets, or CSS. This makes webpages pret
 ## JavaScript
 
 Brendan Eich created JavaScript to make webpages interactive.
+
+## React
+
+We use react to update the page as variables change.
