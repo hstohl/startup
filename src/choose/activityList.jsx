@@ -41,33 +41,21 @@ const ActivityCard = ({ emoji, name, capacity, full, onJoin }) => {
   );
 };
 
-export function ActivityList({ onGroupChoice }) {
-  const [activities, setActivities] = React.useState(() => {
-    const storedActivities = localStorage.getItem("activities");
-    return storedActivities ? JSON.parse(storedActivities) : initialActivities;
-  });
-
-  React.useEffect(() => {
-    localStorage.setItem("activities", JSON.stringify(activities));
-  }, [activities]);
-
+export function ActivityList({ activities, onGroupChoice }) {
   const handleJoinActivity = (activityName) => {
-    setActivities((prevActivities) => {
-      const updatedActivities = prevActivities.map((activity) => {
-        if (
-          activity.name === activityName &&
-          activity.capacity[0] < activity.capacity[1]
-        ) {
-          return {
-            ...activity,
-            capacity: [activity.capacity[0] + 1, activity.capacity[1]],
-          };
-        }
-        return activity;
-      });
-      localStorage.setItem("activities", JSON.stringify(updatedActivities));
-      return updatedActivities;
+    const updatedActivities = activities.map((activity) => {
+      if (
+        activity.name === activityName &&
+        activity.capacity[0] < activity.capacity[1]
+      ) {
+        return {
+          ...activity,
+          capacity: [activity.capacity[0] + 1, activity.capacity[1]],
+        };
+      }
+      return activity;
     });
+    localStorage.setItem("activities", JSON.stringify(updatedActivities));
     onGroupChoice(activityName);
   };
   return (

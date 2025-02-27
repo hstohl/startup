@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Messages } from "./messages";
@@ -14,7 +15,21 @@ export function Joined(props) {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
+
+    return () => {
+      if (props.group) {
+        handleLeaveGroup();
+      }
+    };
   }, []);
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (props.group) {
+  //       handleLeaveGroup();
+  //     }
+  //   };
+  // }, []);
 
   React.useEffect(() => {
     const activity = JSON.parse(localStorage.getItem("activities")).find(
@@ -26,10 +41,25 @@ export function Joined(props) {
   }, [props.group]);
 
   function handleChatMessage(message) {
-    MessageNotifier.broadcastEvent(props.userName, MessageEvent.Chat, {
+    const newMessage = {
       name: props.userName,
       message: message,
-    });
+    };
+
+    MessageNotifier.broadcastEvent(
+      props.userName,
+      MessageEvent.Chat,
+      newMessage
+    );
+
+    const chats = JSON.parse(localStorage.getItem("chats")) || {};
+    const groupChats = chats[props.group] || [];
+    const updatedChats = {
+      ...chats,
+      [props.group]: [...groupChats, newMessage],
+    };
+    localStorage.setItem("chats", JSON.stringify(updatedChats));
+
     setMessage("");
     inputRef.current?.focus();
   }
@@ -41,24 +71,44 @@ export function Joined(props) {
   }, []);
 
   const handleLeaveGroup = () => {
-    const activities = JSON.parse(localStorage.getItem("activities")) || [];
+    if (leaveClickedRef.current) return;
+    leaveClickedRef.current = true;
 
-    const updatedActivities = activities.map((activity) => {
-      if (activity.name === props.group) {
-        return {
-          ...activity,
-          capacity: [activity.capacity[0] - 1, activity.capacity[1]],
-        };
-      }
-      return activity;
-    });
+    if (window.confirm("Are you sure you want to leave the group?")) {
+      const activities = JSON.parse(localStorage.getItem("activities")) || [];
 
-    localStorage.setItem("activities", JSON.stringify(updatedActivities));
+      console.log("Before update:", activities[5]);
 
-    props.setGroup("");
-    localStorage.removeItem("group");
-    navigate("/choose");
+      const updatedActivities = activities.map((activity) => {
+        if (activity.name === props.group) {
+          return {
+            ...activity,
+            capacity: [activity.capacity[0] - 1, activity.capacity[1]],
+          };
+        }
+        return activity;
+      });
+
+      console.log("After update:", updatedActivities[5]);
+
+      localStorage.setItem("activities", JSON.stringify(updatedActivities));
+
+      console.log(
+        "After setItem:",
+        JSON.parse(localStorage.getItem("activities"))
+      );
+
+      props.setGroup("");
+      localStorage.removeItem("group");
+      navigate("/choose");
+    }
+
+    setTimeout(() => {
+      leaveClickedRef.current = false;
+    }, 100);
   };
+
+  const leaveClickedRef = useRef(false);
 
   return (
     <main className="container-fluid bg-secondary">
@@ -71,7 +121,7 @@ export function Joined(props) {
           Chat with your Group
         </div>
         <div className="card-body chat-messages p-3 text-black">
-          <Messages userName={props.userName} />
+          <Messages userName={props.userName} group={props.group} />
         </div>
         <div className="card-footer">
           <div className="input-group">

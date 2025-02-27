@@ -5,7 +5,14 @@ import { ActivityList } from "./activityList";
 import "./choose.css";
 
 export function Choose(props) {
+  const [activities, setActivities] = React.useState([]);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const storedActivities =
+      JSON.parse(localStorage.getItem("activities")) || [];
+    setActivities(storedActivities);
+  }, []);
 
   return (
     <main className="container-fluid bg-secondary text-center">
@@ -25,7 +32,10 @@ export function Choose(props) {
       <br />
 
       <div className="container">
-        <ActivityList onGroupChoice={props.onGroupChoice} />
+        <ActivityList
+          activities={activities}
+          onGroupChoice={props.onGroupChoice}
+        />
       </div>
     </main>
   );

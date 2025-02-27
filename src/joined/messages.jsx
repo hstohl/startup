@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MessageEvent, MessageNotifier } from "./messageNotifier";
+import { MessageEvent, MessageNotifier, EventMessage } from "./messageNotifier";
 import "./joined.css";
 import "./messages.css";
 
@@ -12,10 +12,18 @@ export function Messages(props) {
   React.useEffect(() => {
     MessageNotifier.addHandler(handleChatEvent);
 
+    const storedChats = JSON.parse(localStorage.getItem("chats")) || {};
+    const groupChats = storedChats[props.group] || [];
+    setEvent(
+      groupChats.map(
+        (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
+      )
+    );
+
     return () => {
       MessageNotifier.removeHandler(handleChatEvent);
     };
-  }, []);
+  }, [props.group]);
 
   React.useEffect(() => {
     if (messagesContainerRef.current) {
@@ -25,7 +33,15 @@ export function Messages(props) {
   }, [events]);
 
   function handleChatEvent(event) {
-    setEvent((prevEvents) => [...prevEvents, event]);
+    setEvent((prevEvents) => {
+      let newEvents = [...prevEvents, event];
+      if (newEvents.length >= 35) {
+        newEvents = newEvents.slice(1, 35);
+      }
+
+      //localStorage.setItem({props.group}, JSON.stringify(newEvents));
+      return newEvents;
+    });
   }
 
   function createMessageArray() {
