@@ -15,21 +15,7 @@ export function Joined(props) {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-
-    return () => {
-      if (props.group) {
-        handleLeaveGroup();
-      }
-    };
   }, []);
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (props.group) {
-  //       handleLeaveGroup();
-  //     }
-  //   };
-  // }, []);
 
   React.useEffect(() => {
     const activity = JSON.parse(localStorage.getItem("activities")).find(
@@ -77,7 +63,7 @@ export function Joined(props) {
     if (window.confirm("Are you sure you want to leave the group?")) {
       const activities = JSON.parse(localStorage.getItem("activities")) || [];
 
-      console.log("Before update:", activities[5]);
+      // console.log("Before update:", activities[5]);
 
       const updatedActivities = activities.map((activity) => {
         if (activity.name === props.group) {
@@ -89,18 +75,20 @@ export function Joined(props) {
         return activity;
       });
 
-      console.log("After update:", updatedActivities[5]);
+      // console.log("After update:", updatedActivities[5]);
 
       localStorage.setItem("activities", JSON.stringify(updatedActivities));
 
-      console.log(
-        "After setItem:",
-        JSON.parse(localStorage.getItem("activities"))
-      );
+      // console.log(
+      //   "After setItem:",
+      //   JSON.parse(localStorage.getItem("activities"))
+      // );
 
       props.setGroup("");
       localStorage.removeItem("group");
       navigate("/choose");
+    } else {
+      //navigate("/joined");
     }
 
     setTimeout(() => {

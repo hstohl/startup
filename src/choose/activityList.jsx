@@ -14,7 +14,7 @@ const initialActivities = [
   { emoji: "🎥", name: "Movie", capacity: [0, 6] },
 ];
 
-const ActivityCard = ({ emoji, name, capacity, full, onJoin }) => {
+const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   const navigate = useNavigate();
 
   return (
@@ -27,21 +27,31 @@ const ActivityCard = ({ emoji, name, capacity, full, onJoin }) => {
         </div>
         <button
           onClick={() => {
+            if (group === name) {
+              navigate("/joined");
+              return;
+            }
             onJoin(name);
             navigate("/joined");
           }}
           type="button"
           className="btn btn-primary"
-          disabled={capacity[0] >= capacity[1]}
+          disabled={capacity[0] >= capacity[1] || (group && group !== name)}
         >
-          {capacity[0] >= capacity[1] ? "Full" : "Join"}
+          {group
+            ? group === name
+              ? "View Group"
+              : "Already Joined"
+            : capacity[0] >= capacity[1]
+            ? "Full"
+            : "Join"}
         </button>
       </div>
     </div>
   );
 };
 
-export function ActivityList({ activities, onGroupChoice }) {
+export function ActivityList({ group, activities, onGroupChoice }) {
   const handleJoinActivity = (activityName) => {
     const updatedActivities = activities.map((activity) => {
       if (
@@ -64,6 +74,7 @@ export function ActivityList({ activities, onGroupChoice }) {
         <ActivityCard
           key={activity.name}
           {...activity}
+          group={group}
           onJoin={handleJoinActivity}
         />
       ))}

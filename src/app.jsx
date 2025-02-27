@@ -29,14 +29,12 @@ export default function App() {
           <nav className="navbar fixed-top navbar-dark bg-dark">
             <div className="navbar-brand">Eventure</div>
             <menu className="navbar-nav">
-              {!group && (
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="">
-                    Login
-                  </NavLink>
-                </li>
-              )}
-              {authState === AuthState.Authenticated && !group && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="">
+                  Login
+                </NavLink>
+              </li>
+              {authState === AuthState.Authenticated && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="choose">
                     Join
@@ -75,6 +73,7 @@ export default function App() {
             path="/choose"
             element={
               <Choose
+                group={group}
                 onGroupChoice={(groupName) => {
                   setGroup(groupName);
                   localStorage.setItem("group", groupName);

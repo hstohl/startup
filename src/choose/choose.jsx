@@ -33,6 +33,7 @@ export function Choose(props) {
 
       <div className="container">
         <ActivityList
+          group={props.group}
           activities={activities}
           onGroupChoice={props.onGroupChoice}
         />
