@@ -17,6 +17,15 @@ export function Unauthenticated(props) {
   }
 
   async function createUser() {
+    if (!userName.includes("@") || !userName.includes(".")) {
+      // this will be a third-party call to an email verifier
+      setDisplayError("Invalid email address.");
+      return;
+    }
+    if (localStorage.getItem(userName)) {
+      setDisplayError("User already exists.");
+      return;
+    }
     localStorage.setItem("fullName", fullName);
     localStorage.setItem("userName", userName);
     props.onLogin(fullName, userName);
