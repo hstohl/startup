@@ -78,7 +78,7 @@ export function ActivityList({ group, onGroupChoice }) {
     onGroupChoice(activityName);
   };
   return (
-    <div className="containerIGuess">
+    <div className="container">
       {activities.map((activity) => (
         <ActivityCard
           key={activity.name}
