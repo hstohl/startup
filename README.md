@@ -112,16 +112,16 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Bundled using Vite** - I bundled my startup with Vite.
-- [x] **Components** - I moved my html to jsx files that render my pages.
-- [x] **Router** - There is routing between my pages and my html is reused where appropriate.
+- [ ] **Bundled using Vite** - I bundled my startup with Vite.
+- [ ] **Components** - I moved my html to jsx files that render my pages.
+- [ ] **Router** - There is routing between my pages and my html is reused where appropriate.
 
 ## 🚀 React part 2: Reactivity
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **All functionality implemented or mocked out** - My startup has all its functionality or has it mocked out. You can login as a user and it remembers your name. There is a mock to a third-party call to an email verifier. You can join a group and send messages in a chat. Simulated messages will come in as if from other users. The chat is stored in local storage (but one day will be saved to a database) so newcomers in a group can see what was already discussed (simulated messages aren't saved). When you join a group, you can't join another until you leave your old one. The capacity indicators update if you join or leave a group, but simulated users will not affect it.
-- [x] **Hooks** - My startup uses useEffect and useState to properly re-render pages when variables change. Used in places such as your username, group name, activity capacity, etc.
+- [ ] **All functionality implemented or mocked out** - My startup has all its functionality or has it mocked out. You can login as a user and it remembers your name. There is a mock to a third-party call to an email verifier. You can join a group and send messages in a chat. Simulated messages will come in as if from other users. The chat is stored in local storage (but one day will be saved to a database) so newcomers in a group can see what was already discussed (simulated messages aren't saved). When you join a group, you can't join another until you leave your old one. The capacity indicators update if you join or leave a group, but simulated users will not affect it.
+- [ ] **Hooks** - My startup uses useEffect and useState to properly re-render pages when variables change. Used in places such as your username, group name, activity capacity, etc.
 
 ## 🚀 Service deliverable
 
