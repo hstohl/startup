@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import "./choose.css";
+//import "./choose.css";
 
 const initialActivities = [
   { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
@@ -51,7 +51,16 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   );
 };
 
-export function ActivityList({ group, activities, onGroupChoice }) {
+export function ActivityList({ group, onGroupChoice }) {
+  const [activities, setActivities] = React.useState(() => {
+    const storedActivities = localStorage.getItem("activities");
+    return storedActivities ? JSON.parse(storedActivities) : initialActivities;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem("activities", JSON.stringify(activities));
+  }, [activities]);
+
   const handleJoinActivity = (activityName) => {
     const updatedActivities = activities.map((activity) => {
       if (
@@ -69,7 +78,7 @@ export function ActivityList({ group, activities, onGroupChoice }) {
     onGroupChoice(activityName);
   };
   return (
-    <div className="container">
+    <div className="containerIGuess">
       {activities.map((activity) => (
         <ActivityCard
           key={activity.name}
