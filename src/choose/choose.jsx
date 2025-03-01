@@ -18,7 +18,7 @@ export function Choose(props) {
     <main className="container-fluid bg-secondary text-center">
       <h1>Join an Activity!</h1>
       <div>
-        <span>User: Hudson Stohl </span>
+        <span>User: {props.fullName} </span>
         <button
           type="join"
           onClick={() => navigate("/")}

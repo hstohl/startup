@@ -73,6 +73,7 @@ export default function App() {
             path="/choose"
             element={
               <Choose
+                fullName={fullName}
                 group={group}
                 onGroupChoice={(groupName) => {
                   setGroup(groupName);
