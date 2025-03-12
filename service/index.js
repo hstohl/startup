@@ -7,11 +7,20 @@ const app = express();
 const authCookieName = "token";
 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(express.static("public"));
 
 let users = [];
-let activities = [];
+let activities = [
+  { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
+  { emoji: "🎷", name: "Concert", capacity: [0, 2] },
+  { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4] },
+  { emoji: "🂡", name: "Board Games", capacity: [0, 4] },
+  { emoji: "🎹", name: "Musical", capacity: [0, 2] },
+  { emoji: "🏊", name: "Swimming", capacity: [0, 4] },
+  { emoji: "🍜", name: "Dinner", capacity: [0, 2] },
+  { emoji: "🎥", name: "Movie", capacity: [0, 6] },
+];
 let chats = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -68,6 +77,57 @@ const verifyAuth = async (req, res, next) => {
     res.status(401).send({ msg: "Unauthorized" });
   }
 };
+
+//GetActivities
+apiRouter.get("/activities", verifyAuth, async (req, res) => {
+  res.send(activities);
+});
+
+//JoinActivity
+apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
+  const user = await findUser("token", req.cookies[authCookieName]);
+  if (!user) {
+    return res.status(401).send({ msg: "Unauthorized" });
+  }
+
+  const activityName = req.body.name;
+  if (!activityName) {
+    return res.status(400).send({ msg: "Activity name is required" });
+  }
+
+  const activity = activities.find((a) => a.name === activityName);
+  if (!activity) {
+    return res.status(404).send({ msg: "Activity not found" });
+  }
+
+  const userActivity = activities.find((a) =>
+    a.participants?.includes(user.email)
+  );
+
+  if (userActivity && userActivity.name !== activityName) {
+    return res
+      .status(403)
+      .send({ msg: "You must leave your current activity first" });
+  }
+
+  if (activity.capacity[0] >= activity.capacity[1]) {
+    return res.status(400).send({ msg: "Activity is full" });
+  }
+
+  activity.participants = activity.participants || [];
+  if (!activity.participants.includes(user.email)) {
+    activity.participants.push(user.email);
+    activity.capacity[0]++;
+  }
+
+  res.send({ msg: `Joined ${activityName}`, activities });
+});
+
+//LeaveActivity
+
+//GetChats
+
+//PostChat
 
 // Default error handler
 app.use(function (err, req, res, next) {
