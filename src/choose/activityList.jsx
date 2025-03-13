@@ -23,7 +23,6 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
               return;
             }
             onJoin(name);
-            navigate("/joined");
           }}
           type="button"
           className="btn btn-primary"
@@ -43,6 +42,7 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
 };
 
 export function ActivityList({ group, onGroupChoice }) {
+  const navigate = useNavigate();
   const [activities, setActivities] = React.useState([]);
 
   React.useEffect(() => {
@@ -88,6 +88,7 @@ export function ActivityList({ group, onGroupChoice }) {
       // Update local state with new activities list
       setActivities(data.activities);
       onGroupChoice(activityName);
+      navigate("/joined");
     } catch (error) {
       console.error("Error joining activity:", error);
     }

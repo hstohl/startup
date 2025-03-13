@@ -12,6 +12,12 @@ export function Messages(props) {
   React.useEffect(() => {
     MessageNotifier.addHandler(handleChatEvent);
 
+    return () => {
+      MessageNotifier.removeHandler(handleChatEvent);
+    };
+  }, []);
+
+  React.useEffect(() => {
     const storedChats = JSON.parse(localStorage.getItem("chats")) || {};
     const groupChats = storedChats[props.group] || [];
     setEvent(
@@ -19,10 +25,6 @@ export function Messages(props) {
         (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
       )
     );
-
-    return () => {
-      MessageNotifier.removeHandler(handleChatEvent);
-    };
   }, [props.group]);
 
   React.useEffect(() => {
