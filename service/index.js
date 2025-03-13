@@ -21,6 +21,7 @@ let activities = [
   { emoji: "🍜", name: "Dinner", capacity: [0, 2] },
   { emoji: "🎥", name: "Movie", capacity: [0, 6] },
 ];
+let userGroups = {};
 let chats = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -83,19 +84,20 @@ apiRouter.get("/activities", verifyAuth, async (req, res) => {
   res.send(activities);
 });
 
-//GetJoinedActivity
-apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
-  const { groupName } = req.params;
-
-  const activity = activities.find((a) => a.name === groupName);
-  if (!activity) {
-    return res.status(404).send({ msg: "Activity not found" });
+//GetGroup
+apiRouter.get("/activities/group", verifyAuth, async (req, res) => {
+  const user = await findUser("token", req.cookies[authCookieName]);
+  if (!user) {
+    return res.status(401).send({ msg: "Unauthorized" });
   }
 
-  res.send({
-    name: activity.name,
-    capacity: activity.capacity,
-  });
+  const group = userGroups[user.email];
+
+  if (!group) {
+    return res.status(404).send({ msg: "User is not in any group" });
+  }
+
+  res.send({ group });
 });
 
 //JoinActivity
@@ -115,11 +117,7 @@ apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
     return res.status(404).send({ msg: "Activity not found" });
   }
 
-  const userActivity = activities.find((a) =>
-    a.participants?.includes(user.email)
-  );
-
-  if (userActivity && userActivity.name !== activityName) {
+  if (userGroups[user.email] && userGroups[user.email] !== activityName) {
     return res
       .status(403)
       .send({ msg: "You must leave your current activity first" });
@@ -135,10 +133,51 @@ apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
     activity.capacity[0]++;
   }
 
-  res.send({ msg: `Joined ${activityName}`, activities });
+  userGroups[user.email] = activityName;
+
+  res.send({ msg: `Joined ${activityName}`, group: activityName });
 });
 
 //LeaveActivity
+apiRouter.post("/activities/leave", verifyAuth, async (req, res) => {
+  const user = await findUser("token", req.cookies[authCookieName]);
+  if (!user) {
+    return res.status(401).send({ msg: "Unauthorized" });
+  }
+
+  const activityName = userGroups[user.email];
+
+  if (!activityName) {
+    return res.status(400).send({ msg: "User is not in any group" });
+  }
+
+  const activity = activities.find((a) => a.name === activityName);
+  if (activity) {
+    activity.participants = activity.participants.filter(
+      (email) => email !== user.email
+    );
+    activity.capacity[0]--;
+  }
+
+  delete userGroups[user.email];
+
+  res.send({ msg: `Left ${activityName}` });
+});
+
+//GetJoinedActivity
+apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
+  const { groupName } = req.params;
+
+  const activity = activities.find((a) => a.name === groupName);
+  if (!activity) {
+    return res.status(404).send({ msg: "Activity not found" });
+  }
+
+  res.send({
+    name: activity.name,
+    capacity: activity.capacity,
+  });
+});
 
 //GetChats
 

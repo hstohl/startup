@@ -15,7 +15,7 @@ export default function App() {
   const [fullName, setFullName] = React.useState(
     localStorage.getItem("fullName") || ""
   );
-  const [group, setGroup] = React.useState(localStorage.getItem("group") || ""); // change
+  const [group, setGroup] = React.useState("");
 
   const currentAuthState = userName
     ? AuthState.Authenticated
@@ -76,8 +76,21 @@ export default function App() {
                 fullName={fullName}
                 group={group}
                 onGroupChoice={(groupName) => {
-                  setGroup(groupName);
-                  localStorage.setItem("group", groupName); // change
+                  fetch("/api/activities/join", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ name: groupName }),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (data.group) {
+                        setGroup(data.group);
+                      }
+                    })
+                    .catch((err) => console.error("Error joining group:", err));
                 }}
               />
             }

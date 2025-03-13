@@ -5,6 +5,24 @@ import { useNavigate } from "react-router-dom";
 
 //const initialActivities = fetch("/api/activities");
 
+function onGroupChoice(groupName) {
+  fetch("/api/activities/join", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: groupName }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.group) {
+        setGroup(data.group);
+      }
+    })
+    .catch((err) => console.error("Error joining group:", err));
+}
+
 const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   const navigate = useNavigate();
 
