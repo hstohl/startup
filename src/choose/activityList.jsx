@@ -3,16 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 //import "./choose.css";
 
-// const initialActivities = [
-//   { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
-//   { emoji: "🎷", name: "Concert", capacity: [0, 2] },
-//   { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4] },
-//   { emoji: "🂡", name: "Board Games", capacity: [0, 4] },
-//   { emoji: "🎹", name: "Musical", capacity: [0, 2] },
-//   { emoji: "🏊", name: "Swimming", capacity: [0, 4] },
-//   { emoji: "🍜", name: "Dinner", capacity: [0, 2] },
-//   { emoji: "🎥", name: "Movie", capacity: [0, 6] },
-// ];
+//const initialActivities = fetch("/api/activities");
 
 const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   const navigate = useNavigate();
@@ -52,14 +43,30 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
 };
 
 export function ActivityList({ group, onGroupChoice }) {
-  const [activities, setActivities] = React.useState(() => {
-    const storedActivities = localStorage.getItem("activities");
-    return storedActivities ? JSON.parse(storedActivities) : initialActivities;
-  });
+  const [activities, setActivities] = React.useState([]);
 
   React.useEffect(() => {
-    localStorage.setItem("activities", JSON.stringify(activities));
-  }, [activities]);
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch("/api/activities");
+        const data = await response.json();
+        setActivities(data); // Set the fetched activities in state
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+      }
+    };
+
+    fetchActivities();
+  }, []);
+
+  // const [activities, setActivities] = React.useState(() => {
+  //   const storedActivities = localStorage.getItem("activities");
+  //   return storedActivities ? JSON.parse(storedActivities) : initialActivities;
+  // });
+
+  // React.useEffect(() => {
+  //   localStorage.setItem("activities", JSON.stringify(activities));
+  // }, [activities]);
 
   const handleJoinActivity = async (activityName) => {
     try {

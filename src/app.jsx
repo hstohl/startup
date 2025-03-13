@@ -15,7 +15,7 @@ export default function App() {
   const [fullName, setFullName] = React.useState(
     localStorage.getItem("fullName") || ""
   );
-  const [group, setGroup] = React.useState(localStorage.getItem("group") || "");
+  const [group, setGroup] = React.useState(localStorage.getItem("group") || ""); // change
 
   const currentAuthState = userName
     ? AuthState.Authenticated
@@ -77,7 +77,7 @@ export default function App() {
                 group={group}
                 onGroupChoice={(groupName) => {
                   setGroup(groupName);
-                  localStorage.setItem("group", groupName);
+                  localStorage.setItem("group", groupName); // change
                 }}
               />
             }

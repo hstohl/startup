@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Messages } from "./messages";
@@ -8,9 +7,9 @@ import { MessageEvent, MessageNotifier } from "./messageNotifier";
 import "./joined.css";
 
 export function Joined(props) {
-  const [message, setMessage] = React.useState("");
-  const [capacity, setCapacity] = React.useState([0, 0]);
-  const inputRef = React.useRef(null);
+  const [message, setMessage] = useState("");
+  const [capacity, setCapacity] = useState([0, 0]);
+  const inputRef = useRef(null);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -18,11 +17,24 @@ export function Joined(props) {
   }, []);
 
   React.useEffect(() => {
-    const activity = JSON.parse(localStorage.getItem("activities")).find(
-      (activity) => activity.name === props.group
-    );
-    if (activity) {
-      setCapacity(activity.capacity);
+    const fetchActivityData = async () => {
+      try {
+        const response = await fetch(`/api/activities/${props.group}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch activity data");
+        }
+
+        const activity = await response.json();
+
+        setCapacity(activity.capacity);
+      } catch (error) {
+        console.error("Error fetching activity:", error);
+      }
+    };
+
+    if (props.group) {
+      fetchActivityData();
     }
   }, [props.group]);
 
@@ -62,39 +74,28 @@ export function Joined(props) {
     }
   };
 
-  const handleLeaveGroup = () => {
+  const handleLeaveGroup = async () => {
     if (leaveClickedRef.current) return;
     leaveClickedRef.current = true;
 
     if (window.confirm("Are you sure you want to leave the group?")) {
-      const activities = JSON.parse(localStorage.getItem("activities")) || [];
+      try {
+        const response = await fetch(`/api/activities/leave`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ group: props.group }),
+        });
 
-      // console.log("Before update:", activities[5]);
-
-      const updatedActivities = activities.map((activity) => {
-        if (activity.name === props.group) {
-          return {
-            ...activity,
-            capacity: [activity.capacity[0] - 1, activity.capacity[1]],
-          };
+        if (!response.ok) {
+          throw new Error("Failed to leave group");
         }
-        return activity;
-      });
-
-      // console.log("After update:", updatedActivities[5]);
-
-      localStorage.setItem("activities", JSON.stringify(updatedActivities));
-
-      // console.log(
-      //   "After setItem:",
-      //   JSON.parse(localStorage.getItem("activities"))
-      // );
-
-      props.setGroup("");
-      localStorage.removeItem("group");
-      navigate("/choose");
-    } else {
-      //navigate("/joined");
+        props.setGroup("");
+        navigate("/choose");
+      } catch (error) {
+        console.error("Error leaving group:", error);
+      }
     }
 
     setTimeout(() => {

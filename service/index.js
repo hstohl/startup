@@ -83,6 +83,21 @@ apiRouter.get("/activities", verifyAuth, async (req, res) => {
   res.send(activities);
 });
 
+//GetJoinedActivity
+apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
+  const { groupName } = req.params;
+
+  const activity = activities.find((a) => a.name === groupName);
+  if (!activity) {
+    return res.status(404).send({ msg: "Activity not found" });
+  }
+
+  res.send({
+    name: activity.name,
+    capacity: activity.capacity,
+  });
+});
+
 //JoinActivity
 apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
