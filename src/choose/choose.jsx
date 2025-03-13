@@ -34,7 +34,7 @@ export function Choose(props) {
       <br />
 
       <div className="container">
-        <ActivityList />
+        <ActivityList changeGroup={props.onJoin} />
       </div>
     </main>
   );

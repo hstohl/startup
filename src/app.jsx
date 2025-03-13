@@ -39,8 +39,9 @@ export default function App() {
         }
       }
     };
-
+    console.log("First: " + group);
     fetchUserGroup();
+    console.log("Second: " + group);
   }, [userName]);
 
   return (
@@ -90,10 +91,27 @@ export default function App() {
             }
             exact
           />
-          <Route path="/choose" element={<Choose fullName={fullName} />} />
+          <Route
+            path="/choose"
+            element={
+              <Choose
+                fullName={fullName}
+                onJoin={(group) => {
+                  setGroup(group);
+                }}
+              />
+            }
+          />
           <Route
             path="/joined"
-            element={<Joined userName={fullName} />} // removed setGroup and group
+            element={
+              <Joined
+                userName={fullName}
+                changeGroup={(group) => {
+                  setGroup(group);
+                }}
+              />
+            } // removed setGroup and group
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

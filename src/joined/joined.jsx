@@ -112,6 +112,7 @@ export function Joined(props) {
           throw new Error("Failed to leave group");
         }
         //props.setGroup("");
+        props.changeGroup("");
         navigate("/choose");
       } catch (error) {
         console.error("Error leaving group:", error);
