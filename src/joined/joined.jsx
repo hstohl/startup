@@ -7,6 +7,7 @@ import { MessageEvent, MessageNotifier } from "./messageNotifier";
 import "./joined.css";
 
 export function Joined(props) {
+  const [group, setGroup] = useState("");
   const [message, setMessage] = useState("");
   const [capacity, setCapacity] = useState([0, 0]);
   const inputRef = useRef(null);
@@ -14,29 +15,48 @@ export function Joined(props) {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
 
-  React.useEffect(() => {
-    const fetchActivityData = async () => {
+    const fetchUserGroup = async () => {
       try {
-        const response = await fetch(`/api/activities/${props.group}`);
+        const response = await fetch("/api/activities/group", {
+          credentials: "include",
+        });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch activity data");
+          throw new Error("Failed to fetch group data");
         }
 
-        const activity = await response.json();
+        const data = await response.json();
 
-        setCapacity(activity.capacity);
+        setGroup(data.group);
+        if (data.group) {
+          fetchActivityData(data.group);
+        }
       } catch (error) {
-        console.error("Error fetching activity:", error);
+        console.error("Error fetching group:", error);
       }
     };
 
-    if (props.group) {
-      fetchActivityData();
+    fetchUserGroup();
+  }, []);
+
+  const fetchActivityData = async (group) => {
+    try {
+      const response = await fetch(`/api/activities/${group}`, {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch activity data");
+      }
+
+      const activity = await response.json();
+
+      setCapacity(activity.capacity);
+    } catch (error) {
+      console.error("Error fetching activity:", error);
     }
-  }, [props.group]);
+  };
 
   function handleChatMessage(message) {
     const newMessage = {
@@ -51,10 +71,10 @@ export function Joined(props) {
     );
 
     const chats = JSON.parse(localStorage.getItem("chats")) || {};
-    const groupChats = chats[props.group] || [];
+    const groupChats = chats[group] || [];
     const updatedChats = {
       ...chats,
-      [props.group]: [...groupChats, newMessage],
+      [group]: [...groupChats, newMessage],
     };
     localStorage.setItem("chats", JSON.stringify(updatedChats));
 
@@ -85,13 +105,13 @@ export function Joined(props) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ group: props.group }),
+          body: JSON.stringify({ group: group }),
         });
 
         if (!response.ok) {
           throw new Error("Failed to leave group");
         }
-        props.setGroup("");
+        //props.setGroup("");
         navigate("/choose");
       } catch (error) {
         console.error("Error leaving group:", error);
@@ -108,7 +128,7 @@ export function Joined(props) {
   return (
     <main className="container-fluid bg-secondary">
       <p>
-        Your Activity: {props.group} 👤 {capacity[0]}/{capacity[1]}
+        Your Activity: {group} 👤 {capacity[0]}/{capacity[1]}
       </p>
 
       <div className="card chatbox">
@@ -116,7 +136,7 @@ export function Joined(props) {
           Chat with your Group
         </div>
         <div className="card-body chat-messages p-3 text-black">
-          <Messages userName={props.userName} group={props.group} />
+          <Messages userName={props.userName} group={group} />
         </div>
         <div className="card-footer">
           <div className="input-group">

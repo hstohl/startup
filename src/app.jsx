@@ -22,6 +22,27 @@ export default function App() {
     : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
 
+  React.useEffect(() => {
+    const fetchUserGroup = async () => {
+      if (userName) {
+        try {
+          const response = await fetch("/api/activities/group", {
+            credentials: "include",
+          });
+          if (!response.ok) {
+            throw new Error("Failed to fetch group data");
+          }
+          const data = await response.json();
+          setGroup(data.group);
+        } catch (error) {
+          console.error("Error fetching group data:", error);
+        }
+      }
+    };
+
+    fetchUserGroup();
+  }, [userName]);
+
   return (
     <BrowserRouter>
       <div className="app bg-dark text-light">
@@ -69,37 +90,10 @@ export default function App() {
             }
             exact
           />
-          <Route
-            path="/choose"
-            element={
-              <Choose
-                fullName={fullName}
-                group={group}
-                onGroupChoice={(groupName) => {
-                  fetch("/api/activities/join", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ name: groupName }),
-                  })
-                    .then((res) => res.json())
-                    .then((data) => {
-                      if (data.group) {
-                        setGroup(data.group);
-                      }
-                    })
-                    .catch((err) => console.error("Error joining group:", err));
-                }}
-              />
-            }
-          />
+          <Route path="/choose" element={<Choose fullName={fullName} />} />
           <Route
             path="/joined"
-            element={
-              <Joined userName={fullName} group={group} setGroup={setGroup} />
-            }
+            element={<Joined userName={fullName} />} // removed setGroup and group
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

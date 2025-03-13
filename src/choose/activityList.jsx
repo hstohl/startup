@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 //import "./choose.css";
 
-//const initialActivities = fetch("/api/activities");
-
 function onGroupChoice(groupName) {
   fetch("/api/activities/join", {
     method: "POST",
@@ -15,11 +13,6 @@ function onGroupChoice(groupName) {
     body: JSON.stringify({ name: groupName }),
   })
     .then((res) => res.json())
-    .then((data) => {
-      if (data.group) {
-        setGroup(data.group);
-      }
-    })
     .catch((err) => console.error("Error joining group:", err));
 }
 
@@ -59,9 +52,29 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   );
 };
 
-export function ActivityList({ group, onGroupChoice }) {
+export function ActivityList({}) {
   const navigate = useNavigate();
   const [activities, setActivities] = React.useState([]);
+  const [group, setGroup] = React.useState("");
+
+  React.useEffect(() => {
+    const fetchUserGroup = async () => {
+      try {
+        const response = await fetch("/api/activities/group", {
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch group data");
+        }
+        const data = await response.json();
+        setGroup(data.group);
+      } catch (error) {
+        console.error("Error fetching group data:", error);
+      }
+    };
+
+    fetchUserGroup();
+  }, []);
 
   React.useEffect(() => {
     const fetchActivities = async () => {
@@ -128,14 +141,18 @@ export function ActivityList({ group, onGroupChoice }) {
 
   return (
     <div className="container">
-      {activities.map((activity) => (
-        <ActivityCard
-          key={activity.name}
-          {...activity}
-          group={group}
-          onJoin={handleJoinActivity}
-        />
-      ))}
+      {activities && Array.isArray(activities) ? (
+        activities.map((activity) => (
+          <ActivityCard
+            key={activity.name}
+            {...activity}
+            group={group}
+            onJoin={handleJoinActivity}
+          />
+        ))
+      ) : (
+        <p>Loading activities...</p>
+      )}
     </div>
   );
 }
