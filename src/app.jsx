@@ -39,9 +39,7 @@ export default function App() {
         }
       }
     };
-    console.log("First: " + group);
     fetchUserGroup();
-    console.log("Second: " + group);
   }, [userName]);
 
   return (

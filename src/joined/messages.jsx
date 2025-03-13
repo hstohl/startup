@@ -18,13 +18,33 @@ export function Messages(props) {
   }, []);
 
   React.useEffect(() => {
-    const storedChats = JSON.parse(localStorage.getItem("chats")) || {};
-    const groupChats = storedChats[props.group] || [];
-    setEvent(
-      groupChats.map(
-        (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
-      )
-    );
+    if (!props.group) {
+      return;
+    }
+    //const storedChats = JSON.parse(localStorage.getItem("chats")) || {};
+    const fetchChats = async () => {
+      try {
+        const response = await fetch(`/api/chats/${props.group}`, {
+          credentials: "include",
+        });
+        const data = await response.json();
+        setEvent(
+          data.map(
+            (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
+          )
+        );
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+      }
+    };
+    fetchChats();
+
+    // const groupChats = storedChats[props.group] || [];
+    // setEvent(
+    //   groupChats.map(
+    //     (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
+    //   )
+    // );
   }, [props.group]);
 
   React.useEffect(() => {

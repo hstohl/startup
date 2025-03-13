@@ -10,6 +10,7 @@ export function Joined(props) {
   const [group, setGroup] = useState("");
   const [message, setMessage] = useState("");
   const [capacity, setCapacity] = useState([0, 0]);
+  const [chats, setChats] = useState([]);
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -36,9 +37,27 @@ export function Joined(props) {
         console.error("Error fetching group:", error);
       }
     };
-
     fetchUserGroup();
   }, []);
+
+  React.useEffect(() => {
+    if (!group) {
+      return;
+    }
+    const fetchChats = async () => {
+      try {
+        const response = await fetch(`/api/chats/${group}`, {
+          credentials: "include",
+        });
+        const data = await response.json();
+        setChats(data);
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+      }
+    };
+
+    fetchChats();
+  }, [group]);
 
   const fetchActivityData = async (group) => {
     try {
@@ -58,7 +77,7 @@ export function Joined(props) {
     }
   };
 
-  function handleChatMessage(message) {
+  async function handleChatMessage(message) {
     const newMessage = {
       name: props.userName,
       message: message,
@@ -70,13 +89,18 @@ export function Joined(props) {
       newMessage
     );
 
-    const chats = JSON.parse(localStorage.getItem("chats")) || {};
-    const groupChats = chats[group] || [];
+    const groupChats = chats;
     const updatedChats = {
       ...chats,
       [group]: [...groupChats, newMessage],
     };
-    localStorage.setItem("chats", JSON.stringify(updatedChats));
+    //localStorage.setItem("chats", JSON.stringify(updatedChats));
+    setChats(updatedChats);
+    await fetch(`/api/chat/${group}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(updatedChats),
+    });
 
     setMessage("");
     inputRef.current?.focus();
@@ -86,7 +110,7 @@ export function Joined(props) {
     MessageNotifier.broadcastEvent(props.userName, MessageEvent.Join, {
       name: props.userName,
     });
-  }, []);
+  }, [props.userName]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && message.trim()) {

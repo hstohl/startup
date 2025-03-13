@@ -22,7 +22,7 @@ let activities = [
   { emoji: "🎥", name: "Movie", capacity: [0, 6] },
 ];
 let userGroups = {};
-let chats = [];
+let chats = {};
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -180,8 +180,17 @@ apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
 });
 
 //GetChats
+apiRouter.get("/chats/:groupName", verifyAuth, async (req, res) => {
+  const { groupName } = req.params;
+  const groupChats = chats[groupName] || [];
+  res.send(groupChats);
+});
 
-//PostChat
+//UpdateChat
+apiRouter.post("/chat/:groupName", verifyAuth, (req, res) => {
+  chats[groupName] = req.body;
+  res.send(chats);
+});
 
 // Default error handler
 app.use(function (err, req, res, next) {

@@ -16,11 +16,12 @@ export function Unauthenticated(props) {
 
   async function createUser() {
     if (!userName.includes("@") || !userName.includes(".")) {
-      // this will be a third-party call to an email verifier
+      // TODO this will be a third-party call to an email verifier
       setDisplayError("Invalid email address.");
       return;
     }
     if (localStorage.getItem(userName)) {
+      //TODO check backend
       setDisplayError("User already exists.");
       return;
     }

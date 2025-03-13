@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 //import "./choose.css";
 
-function onGroupChoice(groupName) {
-  fetch("/api/activities/join", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name: groupName }),
-  })
-    .then((res) => res.json())
-    .catch((err) => console.error("Error joining group:", err));
-}
+// function onGroupChoice(groupName) {
+//   fetch("/api/activities/join", {
+//     method: "POST",
+//     credentials: "include",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ name: groupName }),
+//   })
+//     .then((res) => res.json())
+//     .catch((err) => console.error("Error joining group:", err));
+// }
 
 const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   const navigate = useNavigate();
