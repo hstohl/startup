@@ -56,13 +56,13 @@ export function Messages(props) {
 
   function handleChatEvent(event) {
     setEvent((prevEvents) => {
-      let newEvents = [...prevEvents, event];
-      if (newEvents.length >= 35) {
-        newEvents = newEvents.slice(1, 35);
-      }
-
-      //localStorage.setItem({props.group}, JSON.stringify(newEvents));
-      return newEvents;
+      const trimmedEvents = [...prevEvents, event].slice(-35); // Always keep last 35
+      return trimmedEvents;
+      // let newEvents = [...prevEvents, event];
+      // if (newEvents.length >= 35) {
+      //   newEvents = newEvents.slice(1, 35);
+      // }
+      // return newEvents;
     });
   }
 

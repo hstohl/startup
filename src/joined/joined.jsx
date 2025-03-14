@@ -89,17 +89,15 @@ export function Joined(props) {
       newMessage
     );
 
-    const groupChats = chats;
-    const updatedChats = {
-      ...chats,
-      [group]: [...groupChats, newMessage],
-    };
-    //localStorage.setItem("chats", JSON.stringify(updatedChats));
-    setChats(updatedChats);
+    setChats((prevChats) => {
+      const trimmedChats = [...prevChats, newMessage].slice(-35);
+      return trimmedChats;
+    });
+
     await fetch(`/api/chat/${group}`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(updatedChats),
+      body: JSON.stringify(newMessage),
     });
 
     setMessage("");

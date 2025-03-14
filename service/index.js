@@ -188,8 +188,16 @@ apiRouter.get("/chats/:groupName", verifyAuth, async (req, res) => {
 
 //UpdateChat
 apiRouter.post("/chat/:groupName", verifyAuth, (req, res) => {
-  chats[groupName] = req.body;
-  res.send(chats);
+  const { groupName } = req.params;
+  const { name, message } = req.body;
+  if (!chats[groupName]) {
+    chats[groupName] = [];
+  }
+  chats[groupName].push({ name, message });
+  if (chats[groupName].length > 35) {
+    chats[groupName] = chats[groupName].slice(-35);
+  }
+  res.send(chats[groupName]);
 });
 
 // Default error handler
