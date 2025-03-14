@@ -10,19 +10,45 @@ export function Unauthenticated(props) {
   const [password, setPassword] = React.useState("");
   const [displayError, setDisplayError] = React.useState(null);
 
+  async function validateEmail(userName) {
+    let isValid = true;
+    if (!userName.includes("@") || !userName.includes(".")) {
+      setDisplayError("Invalid email address.");
+      return false;
+    }
+
+    try {
+      const response = await fetch(
+        `https://www.disify.com/api/email/${userName}`
+      );
+      const data = await response.json();
+      console.log(data);
+
+      if (!data.format) {
+        setDisplayError("Invalid email address.");
+        isValid = false;
+      } else if (data.disposable) {
+        setDisplayError("Disposable email addresses are not allowed.");
+        isValid = false;
+      } else if (!data.dns) {
+        setDisplayError("Email domain does not exist.");
+        isValid = false;
+      }
+    } catch (error) {
+      console.error("Error verifying email:", error);
+      setDisplayError("Error verifying email.");
+      isValid = false;
+    }
+    return isValid;
+  }
+
   async function loginUser() {
     loginOrCreate(`/api/auth/login`);
   }
 
   async function createUser() {
-    if (!userName.includes("@") || !userName.includes(".")) {
-      // TODO this will be a third-party call to an email verifier
-      setDisplayError("Invalid email address.");
-      return;
-    }
-    if (localStorage.getItem(userName)) {
-      //TODO check backend
-      setDisplayError("User already exists.");
+    const isValid = await validateEmail(userName);
+    if (!isValid) {
       return;
     }
     loginOrCreate(`/api/auth/create`);
