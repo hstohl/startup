@@ -5,16 +5,7 @@ import { ActivityList } from "./activityList";
 import "./choose.css";
 
 export function Choose(props) {
-  //NOT NEEDED I THINK REMOVE
-  // const [activities, setActivities] = React.useState([]);
   const navigate = useNavigate();
-
-  //NOT NEEDED I THINK REMOVE
-  // React.useEffect(() => {
-  //   const storedActivities =
-  //     JSON.parse(localStorage.getItem("activities")) || [];
-  //   setActivities(storedActivities);
-  // }, []);
 
   return (
     <main className="container-fluid bg-secondary text-center">

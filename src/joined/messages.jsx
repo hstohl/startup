@@ -21,7 +21,6 @@ export function Messages(props) {
     if (!props.group) {
       return;
     }
-    //const storedChats = JSON.parse(localStorage.getItem("chats")) || {};
     const fetchChats = async () => {
       try {
         const response = await fetch(`/api/chats/${props.group}`, {
@@ -46,13 +45,6 @@ export function Messages(props) {
       }
     };
     fetchChats();
-
-    // const groupChats = storedChats[props.group] || [];
-    // setEvent(
-    //   groupChats.map(
-    //     (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
-    //   )
-    // );
   }, [props.group]);
 
   React.useEffect(() => {
@@ -66,11 +58,6 @@ export function Messages(props) {
     setEvent((prevEvents) => {
       const trimmedEvents = [...prevEvents, event].slice(-35);
       return trimmedEvents;
-      // let newEvents = [...prevEvents, event];
-      // if (newEvents.length >= 35) {
-      //   newEvents = newEvents.slice(1, 35);
-      // }
-      // return newEvents;
     });
   }
 

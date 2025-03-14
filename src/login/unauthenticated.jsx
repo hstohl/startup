@@ -22,7 +22,6 @@ export function Unauthenticated(props) {
         `https://www.disify.com/api/email/${userName}`
       );
       const data = await response.json();
-      console.log(data);
 
       if (!data.format) {
         setDisplayError("Invalid email address.");

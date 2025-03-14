@@ -3,19 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 //import "./choose.css";
 
-// function onGroupChoice(groupName) {
-//   fetch("/api/activities/join", {
-//     method: "POST",
-//     credentials: "include",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ name: groupName }),
-//   })
-//     .then((res) => res.json())
-//     .catch((err) => console.error("Error joining group:", err));
-// }
-
 const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
   const navigate = useNavigate();
 
@@ -90,15 +77,6 @@ export function ActivityList({ changeGroup }) {
     fetchActivities();
   }, []);
 
-  // const [activities, setActivities] = React.useState(() => {
-  //   const storedActivities = localStorage.getItem("activities");
-  //   return storedActivities ? JSON.parse(storedActivities) : initialActivities;
-  // });
-
-  // React.useEffect(() => {
-  //   localStorage.setItem("activities", JSON.stringify(activities));
-  // }, [activities]);
-
   const handleJoinActivity = async (activityName) => {
     try {
       const response = await fetch("/api/activities/join", {
@@ -106,7 +84,6 @@ export function ActivityList({ changeGroup }) {
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
         },
-        //credentials: "include",
         body: JSON.stringify({ name: activityName }),
       });
       const data = await response.json();
@@ -119,25 +96,10 @@ export function ActivityList({ changeGroup }) {
       // Update local state with new activities list
       setActivities(data.activities);
       changeGroup(activityName);
-      //onGroupChoice(activityName);
       navigate("/joined");
     } catch (error) {
       console.error("Error joining activity:", error);
     }
-    // const updatedActivities = activities.map((activity) => {
-    //   if (
-    //     activity.name === activityName &&
-    //     activity.capacity[0] < activity.capacity[1]
-    //   ) {
-    //     return {
-    //       ...activity,
-    //       capacity: [activity.capacity[0] + 1, activity.capacity[1]],
-    //     };
-    //   }
-    //   return activity;
-    // });
-    // localStorage.setItem("activities", JSON.stringify(updatedActivities));
-    // onGroupChoice(activityName);
   };
 
   return (

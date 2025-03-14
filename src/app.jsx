@@ -109,7 +109,7 @@ export default function App() {
                   setGroup(group);
                 }}
               />
-            } // removed setGroup and group
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

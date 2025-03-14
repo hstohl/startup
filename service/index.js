@@ -90,13 +90,7 @@ apiRouter.get("/activities/group", verifyAuth, async (req, res) => {
   if (!user) {
     return res.status(401).send({ msg: "Unauthorized" });
   }
-
   const group = userGroups[user.email];
-
-  // if (!group) {
-  //   return res.status(404).send({ msg: "User is not in any group" });
-  // }
-
   res.send({ group });
 });
 
