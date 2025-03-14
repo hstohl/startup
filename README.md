@@ -127,11 +127,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Done!
+- [x] **Static middleware for frontend** - Done!
+- [x] **Calls to third party endpoints** - In unauthenticated.jsx a third party api is called to verify emails of new users.
+- [x] **Backend service endpoints** - I have endpoints for all the login/register stuff. I also have endpoints to join and leave activities so it keeps track of capacity and users. It also saves chats so new group members can get caught up on the conversation.
+- [x] **Frontend calls service endpoints** - My frontend calls into my backend using fetch.
+- [x] **Supports registration, login, logout, and restricted endpoint** - My startup supports registration, login, logout, and restricted endpoints.
 
 ## 🚀 DB/Login deliverable
 

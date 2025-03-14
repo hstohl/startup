@@ -29,3 +29,7 @@ Brendan Eich created JavaScript to make webpages interactive.
 ## React
 
 We use react to update the page as variables change.
+
+## Service
+
+Creating a backend allows more capabilities to keep information.
