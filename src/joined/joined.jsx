@@ -105,9 +105,11 @@ export function Joined(props) {
   }
 
   useEffect(() => {
-    MessageNotifier.broadcastEvent(props.userName, MessageEvent.Join, {
-      name: props.userName,
-    });
+    if (props.userName) {
+      MessageNotifier.broadcastEvent(props.userName, MessageEvent.Join, {
+        name: props.userName,
+      });
+    }
   }, [props.userName]);
 
   const handleKeyDown = (event) => {

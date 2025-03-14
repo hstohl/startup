@@ -28,11 +28,19 @@ export function Messages(props) {
           credentials: "include",
         });
         const data = await response.json();
-        setEvent(
-          data.map(
-            (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
-          )
+        const fetchedEvents = data.map(
+          (chat) => new EventMessage(chat.name, MessageEvent.Chat, chat)
         );
+        setEvent((prevEvents) => {
+          const joinMessage = prevEvents.find(
+            (event) => event.type === MessageEvent.Join
+          );
+          let newEvents = [...fetchedEvents];
+          if (joinMessage) {
+            newEvents.push(joinMessage);
+          }
+          return newEvents.slice(-35);
+        });
       } catch (error) {
         console.error("Error fetching chats:", error);
       }
@@ -56,7 +64,7 @@ export function Messages(props) {
 
   function handleChatEvent(event) {
     setEvent((prevEvents) => {
-      const trimmedEvents = [...prevEvents, event].slice(-35); // Always keep last 35
+      const trimmedEvents = [...prevEvents, event].slice(-35);
       return trimmedEvents;
       // let newEvents = [...prevEvents, event];
       // if (newEvents.length >= 35) {
