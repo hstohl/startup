@@ -12,16 +12,29 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 let users = [];
-let activities = [
-  { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
-  { emoji: "🎷", name: "Concert", capacity: [0, 2] },
-  { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4] },
-  { emoji: "🂡", name: "Board Games", capacity: [0, 4] },
-  { emoji: "🎹", name: "Musical", capacity: [0, 2] },
-  { emoji: "🏊", name: "Swimming", capacity: [0, 4] },
-  { emoji: "🍜", name: "Dinner", capacity: [0, 2] },
-  { emoji: "🎥", name: "Movie", capacity: [0, 6] },
-];
+// let activities = [
+//   { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
+//   { emoji: "🎷", name: "Concert", capacity: [0, 2] },
+//   { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4] },
+//   { emoji: "🂡", name: "Board Games", capacity: [0, 4] },
+//   { emoji: "🎹", name: "Musical", capacity: [0, 2] },
+//   { emoji: "🏊", name: "Swimming", capacity: [0, 4] },
+//   { emoji: "🍜", name: "Dinner", capacity: [0, 2] },
+//   { emoji: "🎥", name: "Movie", capacity: [0, 6] },
+// ];
+// DB.setActivities(activities);
+
+// const groups = [
+//   { name: "Ice Cream", members: [] },
+//   { name: "Concert", members: [] },
+//   { name: "Rock Climbing", members: [] },
+//   { name: "Board Games", members: [] },
+//   { name: "Musical", members: [] },
+//   { name: "Swimming", members: [] },
+//   { name: "Dinner", members: [] },
+//   { name: "Movie", members: [] },
+// ];
+// DB.setGroups(groups);
 let userGroups = {};
 let chats = {};
 
@@ -84,10 +97,11 @@ const verifyAuth = async (req, res, next) => {
 
 //GetActivities
 apiRouter.get("/activities", verifyAuth, async (req, res) => {
+  activities = await DB.getActivities();
   res.send(activities);
 });
 
-//GetGroup
+//GetGroup TODO
 apiRouter.get("/activities/group", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
   if (!user) {
@@ -97,7 +111,7 @@ apiRouter.get("/activities/group", verifyAuth, async (req, res) => {
   res.send({ group });
 });
 
-//JoinActivity
+//JoinActivity TODO
 apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
   if (!user) {
@@ -135,7 +149,7 @@ apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
   res.send({ msg: `Joined ${activityName}`, group: activityName });
 });
 
-//LeaveActivity
+//LeaveActivity TODO
 apiRouter.post("/activities/leave", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
   if (!user) {
@@ -161,7 +175,7 @@ apiRouter.post("/activities/leave", verifyAuth, async (req, res) => {
   res.send({ msg: `Left ${activityName}` });
 });
 
-//GetJoinedActivity
+//GetJoinedActivity TODO
 apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
   const { groupName } = req.params;
 
@@ -176,14 +190,14 @@ apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
   });
 });
 
-//GetChats
+//GetChats TODO
 apiRouter.get("/chats/:groupName", verifyAuth, async (req, res) => {
   const { groupName } = req.params;
   const groupChats = chats[groupName] || [];
   res.send(groupChats);
 });
 
-//UpdateChat
+//UpdateChat TODO
 apiRouter.post("/chat/:groupName", verifyAuth, (req, res) => {
   const { groupName } = req.params;
   const { name, message } = req.body;
