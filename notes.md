@@ -33,3 +33,7 @@ We use react to update the page as variables change.
 ## Service
 
 Creating a backend allows more capabilities to keep information.
+
+## Mongo DB
+
+Simple database to store json objects in. Easy to use, I like it.
