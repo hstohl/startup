@@ -11,30 +11,29 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
 
-let users = [];
-let activities = [
-  { emoji: "🍨", name: "Ice Cream", capacity: [0, 2], participants: [] },
-  { emoji: "🎷", name: "Concert", capacity: [0, 2], participants: [] },
-  { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4], participants: [] },
-  { emoji: "🂡", name: "Board Games", capacity: [0, 4], participants: [] },
-  { emoji: "🎹", name: "Musical", capacity: [0, 2], participants: [] },
-  { emoji: "🏊", name: "Swimming", capacity: [0, 4], participants: [] },
-  { emoji: "🍜", name: "Dinner", capacity: [0, 2], participants: [] },
-  { emoji: "🎥", name: "Movie", capacity: [0, 6], participants: [] },
-];
-DB.setActivities(activities);
+// let activities = [
+//   { emoji: "🍨", name: "Ice Cream", capacity: [0, 2], participants: [] },
+//   { emoji: "🎷", name: "Concert", capacity: [0, 2], participants: [] },
+//   { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4], participants: [] },
+//   { emoji: "🂡", name: "Board Games", capacity: [0, 4], participants: [] },
+//   { emoji: "🎹", name: "Musical", capacity: [0, 2], participants: [] },
+//   { emoji: "🏊", name: "Swimming", capacity: [0, 4], participants: [] },
+//   { emoji: "🍜", name: "Dinner", capacity: [0, 2], participants: [] },
+//   { emoji: "🎥", name: "Movie", capacity: [0, 6], participants: [] },
+// ];
+// DB.setActivities(activities);
 
-const chats1 = [
-  { name: "Ice Cream", chats: [] },
-  { name: "Concert", chats: [] },
-  { name: "Rock Climbing", chats: [] },
-  { name: "Board Games", chats: [] },
-  { name: "Musical", chats: [] },
-  { name: "Swimming", chats: [] },
-  { name: "Dinner", chats: [] },
-  { name: "Movie", chats: [] },
-];
-DB.setChats(chats1);
+// const chats = [
+//   { name: "Ice Cream", chats: [] },
+//   { name: "Concert", chats: [] },
+//   { name: "Rock Climbing", chats: [] },
+//   { name: "Board Games", chats: [] },
+//   { name: "Musical", chats: [] },
+//   { name: "Swimming", chats: [] },
+//   { name: "Dinner", chats: [] },
+//   { name: "Movie", chats: [] },
+// ];
+// DB.setChats(chats);
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
