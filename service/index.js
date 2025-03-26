@@ -12,17 +12,17 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 let users = [];
-// let activities = [
-//   { emoji: "🍨", name: "Ice Cream", capacity: [0, 2] },
-//   { emoji: "🎷", name: "Concert", capacity: [0, 2] },
-//   { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4] },
-//   { emoji: "🂡", name: "Board Games", capacity: [0, 4] },
-//   { emoji: "🎹", name: "Musical", capacity: [0, 2] },
-//   { emoji: "🏊", name: "Swimming", capacity: [0, 4] },
-//   { emoji: "🍜", name: "Dinner", capacity: [0, 2] },
-//   { emoji: "🎥", name: "Movie", capacity: [0, 6] },
-// ];
-// DB.setActivities(activities);
+let activities = [
+  { emoji: "🍨", name: "Ice Cream", capacity: [0, 2], participants: [] },
+  { emoji: "🎷", name: "Concert", capacity: [0, 2], participants: [] },
+  { emoji: "🪨", name: "Rock Climbing", capacity: [0, 4], participants: [] },
+  { emoji: "🂡", name: "Board Games", capacity: [0, 4], participants: [] },
+  { emoji: "🎹", name: "Musical", capacity: [0, 2], participants: [] },
+  { emoji: "🏊", name: "Swimming", capacity: [0, 4], participants: [] },
+  { emoji: "🍜", name: "Dinner", capacity: [0, 2], participants: [] },
+  { emoji: "🎥", name: "Movie", capacity: [0, 6], participants: [] },
+];
+DB.setActivities(activities);
 
 // const groups = [
 //   { name: "Ice Cream", members: [] },
@@ -101,17 +101,25 @@ apiRouter.get("/activities", verifyAuth, async (req, res) => {
   res.send(activities);
 });
 
-//GetGroup TODO
+//GetGroup
 apiRouter.get("/activities/group", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
   if (!user) {
     return res.status(401).send({ msg: "Unauthorized" });
   }
-  const group = userGroups[user.email];
-  res.send({ group });
+  //const groupFake = userGroups[user.email];
+  console.log("user.email (in index.js): " + user.email);
+  const group = await DB.getGroup(user.email);
+  console.log("group (in index.js): " + group);
+  if (!group) {
+    return res.send({ group: "" });
+  }
+  groupName = group.name;
+  console.log("groupName (in index.js): " + groupName);
+  res.send({ group: groupName });
 });
 
-//JoinActivity TODO
+//JoinActivity
 apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
   if (!user) {
@@ -123,63 +131,55 @@ apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
     return res.status(400).send({ msg: "Activity name is required" });
   }
 
-  const activity = activities.find((a) => a.name === activityName);
+  //const activity = activities.find((a) => a.name === activityName);
+  const activity = await DB.getActivityByGroup(activityName);
+  //console.log(activity);
   if (!activity) {
     return res.status(404).send({ msg: "Activity not found" });
-  }
-
-  if (userGroups[user.email] && userGroups[user.email] !== activityName) {
-    return res
-      .status(403)
-      .send({ msg: "You must leave your current activity first" });
   }
 
   if (activity.capacity[0] >= activity.capacity[1]) {
     return res.status(400).send({ msg: "Activity is full" });
   }
 
-  activity.participants = activity.participants || [];
   if (!activity.participants.includes(user.email)) {
-    activity.participants.push(user.email);
-    activity.capacity[0]++;
+    DB.joinGroup(user.email, activityName);
   }
 
-  userGroups[user.email] = activityName;
+  //userGroups[user.email] = activityName;
 
   res.send({ msg: `Joined ${activityName}`, group: activityName });
 });
 
-//LeaveActivity TODO
+//LeaveActivity
 apiRouter.post("/activities/leave", verifyAuth, async (req, res) => {
   const user = await findUser("token", req.cookies[authCookieName]);
   if (!user) {
     return res.status(401).send({ msg: "Unauthorized" });
   }
 
-  const activityName = userGroups[user.email];
+  const activity = await DB.getGroup(user.email);
+  const activityName = activity.name;
 
   if (!activityName) {
     return res.status(400).send({ msg: "User is not in any group" });
   }
 
-  const activity = activities.find((a) => a.name === activityName);
   if (activity) {
     activity.participants = activity.participants.filter(
       (email) => email !== user.email
     );
-    activity.capacity[0]--;
+    DB.leaveGroup(user.email, activityName);
   }
-
-  delete userGroups[user.email];
 
   res.send({ msg: `Left ${activityName}` });
 });
 
-//GetJoinedActivity TODO
+//GetJoinedActivity
 apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
   const { groupName } = req.params;
 
-  const activity = activities.find((a) => a.name === groupName);
+  const activity = await DB.getActivityByGroup(groupName);
   if (!activity) {
     return res.status(404).send({ msg: "Activity not found" });
   }
@@ -229,6 +229,7 @@ async function createUser(name, email, password) {
     email: email,
     password: passwordHash,
     token: uuid.v4(),
+    group: "",
   };
   await DB.addUser(user);
 

@@ -42,29 +42,46 @@ async function getActivities() {
   return activityCollection.find().toArray();
 }
 
+async function getActivityByGroup(group) {
+  return await activityCollection.findOne({ name: group });
+}
+
 async function setActivities(activities) {
+  activityCollection.deleteMany({});
   await activityCollection.insertMany(activities);
 }
 
 async function getGroup(user) {
-  return groupCollection.find({ members: user }).toArray();
+  //thisUser = userCollection.findOne({ email: user });
+  return await activityCollection.findOne({ participants: user });
 }
 
 async function joinGroup(user, group) {
-  await groupCollection.updateOne(
+  await activityCollection.updateOne(
     { name: group },
-    { $push: { members: user } }
+    { $push: { participants: user } }
   );
+  await activityCollection.updateOne(
+    { name: group },
+    { $inc: { "capacity.0": 1 } }
+  );
+  await userCollection.updateOne({ email: user }, { $set: { group: group } });
 }
 
 async function leaveGroup(user, group) {
-  await groupCollection.updateOne(
+  await activityCollection.updateOne(
     { name: group },
-    { $pull: { members: user } }
+    { $pull: { participants: user } }
   );
+  await activityCollection.updateOne(
+    { name: group },
+    { $inc: { "capacity.0": -1 } }
+  );
+  await userCollection.updateOne({ email: user }, { $set: { group: "" } });
 }
 
 async function setGroups(groups) {
+  groupCollection.deleteMany({});
   await groupCollection.insertMany(groups);
 }
 
@@ -84,6 +101,7 @@ module.exports = {
   addUser,
   updateUser,
   getActivities,
+  getActivityByGroup,
   setActivities,
   getGroup,
   joinGroup,
