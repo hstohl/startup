@@ -29,7 +29,6 @@ export function Joined(props) {
 
         const data = await response.json();
 
-        console.log("data.group (in joined.jsx): ", data.group);
         setGroup(data.group);
         if (data.group) {
           fetchActivityData(data.group);

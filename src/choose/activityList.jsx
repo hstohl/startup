@@ -26,7 +26,6 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
           className="btn btn-primary"
           disabled={capacity[0] >= capacity[1] || (group && group !== name)}
         >
-          {console.log(group)}
           {group
             ? group === name
               ? "View Group"
@@ -95,11 +94,8 @@ export function ActivityList({ changeGroup }) {
       }
 
       // Update local state with new activities list
-      console.log("data: " + data);
       setActivities(data.activities);
-      console.log("data.activiv: " + data.activities);
       changeGroup(activityName);
-      console.log("Activity Name: " + activityName);
       navigate("/joined");
     } catch (error) {
       console.error("Error joining activity:", error);

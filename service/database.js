@@ -85,14 +85,22 @@ async function setGroups(groups) {
   await groupCollection.insertMany(groups);
 }
 
-async function addChat(chat) {
-  // This probably doesn't work
-  await chatCollection.insertOne(chat);
+async function addChat(groupName, chat) {
+  await chatCollection.updateOne(
+    { name: groupName },
+    { $set: { chats: chat } }
+  );
 }
 
-async function getChat(chatId) {
-  // This almost certainly doesn't work
-  return chatCollection.findOne({ chatId: chatId });
+async function getChat(chatName) {
+  chats = await chatCollection.findOne({ name: chatName });
+  //console.log("chats.chats (in getChats from database): ", chats.chats);
+  return chats.chats;
+}
+
+async function setChats(chats) {
+  await chatCollection.deleteMany({});
+  await chatCollection.insertMany(chats);
 }
 
 module.exports = {
@@ -109,4 +117,5 @@ module.exports = {
   setGroups,
   addChat,
   getChat,
+  setChats,
 };

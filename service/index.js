@@ -24,19 +24,17 @@ let activities = [
 ];
 DB.setActivities(activities);
 
-// const groups = [
-//   { name: "Ice Cream", members: [] },
-//   { name: "Concert", members: [] },
-//   { name: "Rock Climbing", members: [] },
-//   { name: "Board Games", members: [] },
-//   { name: "Musical", members: [] },
-//   { name: "Swimming", members: [] },
-//   { name: "Dinner", members: [] },
-//   { name: "Movie", members: [] },
-// ];
-// DB.setGroups(groups);
-let userGroups = {};
-let chats = {};
+const chats1 = [
+  { name: "Ice Cream", chats: [] },
+  { name: "Concert", chats: [] },
+  { name: "Rock Climbing", chats: [] },
+  { name: "Board Games", chats: [] },
+  { name: "Musical", chats: [] },
+  { name: "Swimming", chats: [] },
+  { name: "Dinner", chats: [] },
+  { name: "Movie", chats: [] },
+];
+DB.setChats(chats1);
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -108,14 +106,11 @@ apiRouter.get("/activities/group", verifyAuth, async (req, res) => {
     return res.status(401).send({ msg: "Unauthorized" });
   }
   //const groupFake = userGroups[user.email];
-  console.log("user.email (in index.js): " + user.email);
   const group = await DB.getGroup(user.email);
-  console.log("group (in index.js): " + group);
   if (!group) {
     return res.send({ group: "" });
   }
   groupName = group.name;
-  console.log("groupName (in index.js): " + groupName);
   res.send({ group: groupName });
 });
 
@@ -133,7 +128,6 @@ apiRouter.post("/activities/join", verifyAuth, async (req, res) => {
 
   //const activity = activities.find((a) => a.name === activityName);
   const activity = await DB.getActivityByGroup(activityName);
-  //console.log(activity);
   if (!activity) {
     return res.status(404).send({ msg: "Activity not found" });
   }
@@ -193,22 +187,21 @@ apiRouter.get("/activities/:groupName", verifyAuth, async (req, res) => {
 //GetChats TODO
 apiRouter.get("/chats/:groupName", verifyAuth, async (req, res) => {
   const { groupName } = req.params;
-  const groupChats = chats[groupName] || [];
-  res.send(groupChats);
+  const groupChatsDB = await DB.getChat(groupName);
+  res.send(groupChatsDB);
 });
 
 //UpdateChat TODO
-apiRouter.post("/chat/:groupName", verifyAuth, (req, res) => {
+apiRouter.post("/chat/:groupName", verifyAuth, async (req, res) => {
   const { groupName } = req.params;
   const { name, message } = req.body;
-  if (!chats[groupName]) {
-    chats[groupName] = [];
+  let groupChatsDB = await DB.getChat(groupName);
+  groupChatsDB.push({ name, message });
+  if (groupChatsDB.length > 35) {
+    groupChatsDB = groupChatsDB.slice(-35);
   }
-  chats[groupName].push({ name, message });
-  if (chats[groupName].length > 35) {
-    chats[groupName] = chats[groupName].slice(-35);
-  }
-  res.send(chats[groupName]);
+  await DB.addChat(groupName, groupChatsDB);
+  res.send(groupChatsDB);
 });
 
 // Default error handler
