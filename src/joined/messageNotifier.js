@@ -20,44 +20,27 @@ class MessageEventNotifier {
   handlers = [];
 
   constructor() {
-    //Simulate chat messages that will eventually come over WebSocket
-    setInterval(() => {
-      var nameOptions = ["Brandon Clark", "Emma Clark", "Kramer Horning"];
-      var messageOptions = [
-        "Hello!",
-        "What's up",
-        "Yo",
-        "Yall ready to play some Catan?",
-        "I've got to go to a birthday party",
-        "bruh",
-        "Saturday at 8?",
-        "Works for me",
-        "Me too",
-        "I'm good with that",
-        "Lit see yall then",
-      ];
-      const message =
-        messageOptions[Math.floor(Math.random() * messageOptions.length)];
-      const userName =
-        nameOptions[Math.floor(Math.random() * nameOptions.length)];
-      this.broadcastEvent(userName, MessageEvent.Chat, {
-        name: userName,
-        message: message,
-      });
-    }, 7000);
-    setInterval(() => {
-      var nameOptions = ["Brandon Clark", "Emma Clark", "Kramer Horning"];
-      const userName =
-        nameOptions[Math.floor(Math.random() * nameOptions.length)];
-      var messageTypeOptions = [MessageEvent.Join, MessageEvent.Leave];
-      const messageType =
-        messageTypeOptions[
-          Math.floor(Math.random() * messageTypeOptions.length)
-        ];
-      this.broadcastEvent(userName, messageType, {
-        name: userName,
-      });
-    }, 19769);
+    let port = window.location.port;
+    const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+    this.socket = new WebSocket(
+      `${protocol}://${window.location.hostname}:${port}/ws`
+    );
+    this.socket.onopen = (event) => {
+      this.receiveEvent(
+        new EventMessage("Eventure", GameEvent.System, { msg: "connected" })
+      );
+    };
+    this.socket.onclose = (event) => {
+      this.receiveEvent(
+        new EventMessage("Eventure", GameEvent.System, { msg: "disconnected" })
+      );
+    };
+    this.socket.onmessage = async (msg) => {
+      try {
+        const event = JSON.parse(await msg.data.text());
+        this.receiveEvent(event);
+      } catch {}
+    };
   }
 
   broadcastEvent(from, type, value) {
