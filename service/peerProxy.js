@@ -1,6 +1,7 @@
 const { WebSocketServer } = require("ws");
 
 function peerProxy(httpServer) {
+  const groupMembers = [];
   // Create a websocket object
   const socketServer = new WebSocketServer({ server: httpServer });
 
@@ -11,7 +12,10 @@ function peerProxy(httpServer) {
     // Forward messages to everyone except the sender
     socket.on("message", function message(data) {
       socketServer.clients.forEach((client) => {
-        if (client !== socket && client.readyState === WebSocket.OPEN) {
+        if (
+          /*groupMembers.includes(client) && */ client.readyState ===
+          WebSocket.OPEN
+        ) {
           client.send(data);
         }
       });

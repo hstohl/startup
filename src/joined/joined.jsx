@@ -137,6 +137,9 @@ export function Joined(props) {
         }
         //props.setGroup("");
         props.changeGroup("");
+        MessageNotifier.broadcastEvent(props.userName, MessageEvent.Leave, {
+          name: props.userName,
+        });
         navigate("/choose");
       } catch (error) {
         console.error("Error leaving group:", error);
