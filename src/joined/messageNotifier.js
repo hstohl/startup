@@ -5,6 +5,7 @@ const MessageEvent = {
   Leave: "chatLeave",
   End: "gameEnd",
   Start: "gameStart",
+  CapacityUpdate: "capacityUpdate",
 };
 
 class EventMessage {
@@ -56,7 +57,7 @@ class MessageEventNotifier {
   }
 
   removeHandler(handler) {
-    this.handlers.filter((h) => h !== handler);
+    /* this.handlers = */ this.handlers.filter((h) => h !== handler); // added 'this.handlers = '
   }
 
   receiveEvent(event) {

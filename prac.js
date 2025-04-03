@@ -13,6 +13,7 @@ export function Joined(props) {
   const [chats, setChats] = useState([]);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  const leaveClickedRef = useRef(false);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -78,27 +79,16 @@ export function Joined(props) {
   };
 
   useEffect(() => {
-    async function handleCapacityUpdate(event) {
-      if (event.type === "chatJoin" || event.type === "chatLeave") {
-        const response = await fetch("/api/activities/group", {
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch group data");
-        }
-
-        const data = await response.json();
-        fetchActivityData(data.group);
+    function handleCapacityUpdate(event) {
+      if (event.type === "capacityUpdate" && event.value.group === group) {
+        setCapacity(event.value.capacity);
       }
     }
 
     MessageNotifier.addHandler(handleCapacityUpdate);
-    console.log("Capacity update event handler added");
 
     return () => {
       MessageNotifier.removeHandler(handleCapacityUpdate);
-      console.log("Capacity update event handler removed");
     };
   }, [group]);
 
@@ -166,7 +156,6 @@ export function Joined(props) {
         if (!response.ok) {
           throw new Error("Failed to leave group");
         }
-        //props.setGroup("");
         props.changeGroup("");
         MessageNotifier.broadcastEvent(
           props.userName,
@@ -186,8 +175,6 @@ export function Joined(props) {
       leaveClickedRef.current = false;
     }, 100);
   };
-
-  const leaveClickedRef = useRef(false);
 
   return (
     <main className="container-fluid bg-secondary">
