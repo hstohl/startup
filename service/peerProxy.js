@@ -5,6 +5,7 @@ function peerProxy(httpServer) {
   const socketServer = new WebSocketServer({ server: httpServer });
 
   socketServer.on("connection", (socket) => {
+    console.log("Websocket connection established");
     socket.isAlive = true;
 
     // Forward messages to everyone except the sender

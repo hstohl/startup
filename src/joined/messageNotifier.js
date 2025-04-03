@@ -27,12 +27,14 @@ class MessageEventNotifier {
     );
     this.socket.onopen = (event) => {
       this.receiveEvent(
-        new EventMessage("Eventure", GameEvent.System, { msg: "connected" })
+        new EventMessage("Eventure", MessageEvent.System, { msg: "connected" })
       );
     };
     this.socket.onclose = (event) => {
       this.receiveEvent(
-        new EventMessage("Eventure", GameEvent.System, { msg: "disconnected" })
+        new EventMessage("Eventure", MessageEvent.System, {
+          msg: "disconnected",
+        })
       );
     };
     this.socket.onmessage = async (msg) => {
@@ -45,7 +47,7 @@ class MessageEventNotifier {
 
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
-    this.receiveEvent(event);
+    this.socket.send(JSON.stringify(event));
   }
 
   addHandler(handler) {
