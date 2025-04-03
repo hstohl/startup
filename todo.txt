@@ -1,4 +1,2 @@
 Websocket TODO
-    Leave group doesn't message
-    Messages don't show up for self (I know how to fix this easy)
     Messages don't show up for just my group (theoretically i can do this but I just need to get my group members to my ws)
