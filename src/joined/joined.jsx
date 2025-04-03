@@ -86,7 +86,8 @@ export function Joined(props) {
     MessageNotifier.broadcastEvent(
       props.userName,
       MessageEvent.Chat,
-      newMessage
+      newMessage,
+      props.email
     );
 
     setChats((prevChats) => {
@@ -106,9 +107,14 @@ export function Joined(props) {
 
   useEffect(() => {
     if (props.userName) {
-      MessageNotifier.broadcastEvent(props.userName, MessageEvent.Join, {
-        name: props.userName,
-      });
+      MessageNotifier.broadcastEvent(
+        props.userName,
+        MessageEvent.Join,
+        {
+          name: props.userName,
+        },
+        props.email
+      );
     }
   }, [props.userName]);
 
@@ -137,9 +143,14 @@ export function Joined(props) {
         }
         //props.setGroup("");
         props.changeGroup("");
-        MessageNotifier.broadcastEvent(props.userName, MessageEvent.Leave, {
-          name: props.userName,
-        });
+        MessageNotifier.broadcastEvent(
+          props.userName,
+          MessageEvent.Leave,
+          {
+            name: props.userName,
+          },
+          props.email
+        );
         navigate("/choose");
       } catch (error) {
         console.error("Error leaving group:", error);

@@ -105,6 +105,7 @@ export default function App() {
             element={
               <Joined
                 userName={fullName}
+                email={userName}
                 changeGroup={(group) => {
                   setGroup(group);
                 }}

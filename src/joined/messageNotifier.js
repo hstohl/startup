@@ -8,10 +8,11 @@ const MessageEvent = {
 };
 
 class EventMessage {
-  constructor(from, type, value) {
+  constructor(from, type, value, email) {
     this.from = from;
     this.type = type;
     this.value = value;
+    this.email = email;
   }
 }
 
@@ -45,8 +46,8 @@ class MessageEventNotifier {
     };
   }
 
-  broadcastEvent(from, type, value) {
-    const event = new EventMessage(from, type, value);
+  broadcastEvent(from, type, value, email) {
+    const event = new EventMessage(from, type, value, email);
     this.socket.send(JSON.stringify(event));
   }
 
