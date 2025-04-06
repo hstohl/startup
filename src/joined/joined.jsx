@@ -77,30 +77,28 @@ export function Joined(props) {
     }
   };
 
-  useEffect(() => {
-    async function handleCapacityUpdate(event) {
-      if (event.type === "chatJoin" || event.type === "chatLeave") {
-        const response = await fetch("/api/activities/group", {
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch group data");
-        }
-
-        const data = await response.json();
-        fetchActivityData(data.group);
-      }
-    }
-
-    MessageNotifier.addHandler(handleCapacityUpdate);
-    console.log("Capacity update event handler added");
+  React.useEffect(() => {
+    MessageNotifier.addHandler(handleCapacityChange);
 
     return () => {
-      MessageNotifier.removeHandler(handleCapacityUpdate);
-      console.log("Capacity update event handler removed");
+      MessageNotifier.removeHandler(handleCapacityChange);
     };
-  }, [group]);
+  }, []);
+
+  async function handleCapacityChange(event) {
+    if (event.type === MessageEvent.Join || event.type === MessageEvent.Leave) {
+      const response = await fetch("/api/activities/group", {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch group data");
+      }
+
+      const data = await response.json();
+      fetchActivityData(data.group);
+    }
+  }
 
   async function handleChatMessage(message) {
     const newMessage = {

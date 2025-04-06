@@ -22,16 +22,17 @@ function peerProxy(httpServer) {
       if (type === "chatJoin") {
         const userGroup = await getUserGroup(email);
         groupMembers.set(socket, userGroup);
-        // sendCapacityUpdate(userGroup, 0);
+
+        sendCapacityUpdate(userGroup);
       }
 
       const senderGroup = groupMembers.get(socket);
-      if (!senderGroup) return;
+      // if (!senderGroup) return;
 
       if (type === "chatLeave") {
         const groupName = groupMembers.get(socket);
         groupMembers.delete(socket);
-        // sendCapacityUpdate(groupName, -1);
+        sendCapacityUpdate(groupName);
       }
 
       socketServer.clients.forEach((client) => {
@@ -39,7 +40,13 @@ function peerProxy(httpServer) {
           client.readyState === WebSocket.OPEN &&
           groupMembers.get(client) === senderGroup
         ) {
-          client.send(data);
+          const message = JSON.stringify({
+            type: type,
+            from: from,
+            value: value,
+            email: email,
+          });
+          client.send(message);
         }
       });
     });
@@ -69,31 +76,19 @@ function peerProxy(httpServer) {
     return group ? group.name : null;
   }
 
-  // async function sendCapacityUpdate(userGroup, change) {
-  //   const activity = await DB.getActivityByGroup(userGroup);
-  //   const updatedCapacity = activity ? activity.capacity : [0, 0];
-  //   updatedCapacity[0] += change || 0;
-  //   console.log("Updated capacity: ", updatedCapacity);
+  function sendCapacityUpdate(groupName) {
+    const message = JSON.stringify({
+      type: "CapacityUpdate",
+      from: "System",
+      value: groupName,
+    });
 
-  //   const capacityUpdateMessage = JSON.stringify({
-  //     type: "CapacityUpdate",
-  //     from: "System",
-  //     value: { group: userGroup, capacity: updatedCapacity },
-  //   });
-
-  //   socketServer.clients.forEach((client) => {
-  //     if (
-  //       client.readyState === WebSocket.OPEN &&
-  //       groupMembers.get(client) === userGroup
-  //     ) {
-  //       console.log(
-  //         "Sending capacity update to client: ",
-  //         capacityUpdateMessage
-  //       );
-  //       client.send(capacityUpdateMessage);
-  //     }
-  //   });
-  // }
+    socketServer.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
 }
 
 module.exports = { peerProxy };

@@ -5,11 +5,11 @@ const MessageEvent = {
   Leave: "chatLeave",
   End: "gameEnd",
   Start: "gameStart",
-  CapacityUpdate: "capacityUpdate",
+  CapacityUpdate: "CapacityUpdate",
 };
 
 class EventMessage {
-  constructor(from, type, value, email) {
+  constructor(from, type, value = {}, email = "") {
     this.from = from;
     this.type = type;
     this.value = value;
@@ -39,9 +39,15 @@ class MessageEventNotifier {
         })
       );
     };
-    this.socket.onmessage = async (msg) => {
+    this.socket.onmessage = (msg) => {
       try {
-        const event = JSON.parse(await msg.data.text());
+        const raw = JSON.parse(msg.data);
+        const event = new EventMessage(
+          raw.from,
+          raw.type,
+          raw.value,
+          raw.email
+        );
         this.receiveEvent(event);
       } catch {}
     };
@@ -57,7 +63,7 @@ class MessageEventNotifier {
   }
 
   removeHandler(handler) {
-    /* this.handlers = */ this.handlers.filter((h) => h !== handler); // added 'this.handlers = '
+    this.handlers = this.handlers.filter((h) => h !== handler); // added 'this.handlers = '
   }
 
   receiveEvent(event) {

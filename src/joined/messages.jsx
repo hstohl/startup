@@ -73,6 +73,8 @@ export function Messages(props) {
         message = `: ${event.value.message}`;
       } else if (event.type === MessageEvent.System) {
         message = event.value.msg;
+      } else if (event.type === MessageEvent.CapacityUpdate) {
+        continue;
       }
 
       messageArray.push(

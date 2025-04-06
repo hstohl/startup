@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { MessageNotifier, MessageEvent } from "../joined/messageNotifier";
 
 //import "./choose.css";
 
@@ -24,7 +25,9 @@ const ActivityCard = ({ emoji, name, capacity, group, onJoin }) => {
           }}
           type="button"
           className="btn btn-primary"
-          disabled={capacity[0] >= capacity[1] || (group && group !== name)}
+          disabled={
+            (group && group !== name) || (!group && capacity[0] >= capacity[1])
+          }
         >
           {group
             ? group === name
@@ -63,19 +66,30 @@ export function ActivityList({ changeGroup }) {
     fetchUserGroup();
   }, []);
 
-  React.useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const response = await fetch("/api/activities");
-        const data = await response.json();
-        setActivities(data); // Set the fetched activities in state
-      } catch (error) {
-        console.error("Error fetching activities:", error);
-      }
-    };
+  const fetchActivities = async () => {
+    try {
+      const response = await fetch("/api/activities");
+      const data = await response.json();
+      setActivities(data); // Set the fetched activities in state
+    } catch (error) {
+      console.error("Error fetching activities:", error);
+    }
+  };
 
+  React.useEffect(() => {
     fetchActivities();
+    MessageNotifier.addHandler(handleCapacityChange);
+
+    return () => {
+      MessageNotifier.removeHandler(handleCapacityChange);
+    };
   }, []);
+
+  async function handleCapacityChange(event) {
+    if (event.type === MessageEvent.CapacityUpdate) {
+      fetchActivities();
+    }
+  }
 
   const handleJoinActivity = async (activityName) => {
     try {
