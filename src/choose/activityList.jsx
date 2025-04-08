@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageNotifier, MessageEvent } from "../joined/messageNotifier";
+import { MessageNotifier, MessageEvent } from "./messageNotifier";
 
 //import "./choose.css";
 
