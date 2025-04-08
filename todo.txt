@@ -1,9 +1,0 @@
-Websocket TODO
-    ##Messages
-    Messages don't show up for just my group (theoretically i can do this but I just need to get my group members to my ws)
-
-    ##Other
-    Group numbers automatically change in choose and joined page
-
-    ##Add
-    Perhaps add group members names showing up
