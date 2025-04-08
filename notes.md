@@ -37,3 +37,7 @@ Creating a backend allows more capabilities to keep information.
 ## Mongo DB
 
 Simple database to store json objects in. Easy to use, I like it.
+
+## Websocket
+
+Websocket lets my backend send messages to my frontend unprompted. The frontend doesn't need to request anything for it to be sent. Very handy.
